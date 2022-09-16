@@ -20,9 +20,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DJANGO_ENV = os.getenv("DJANGO_ENV", "production")
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
 SECRET_KEY = os.getenv("SECRET_KEY", "")
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
@@ -126,9 +123,50 @@ STATIC_URL = "/static/"
 # Simplified static file serving
 # https://devcenter.heroku.com/articles/django-assets
 # https://warehouse.python.org/project/whitenoise/
+
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Error reporting
+# https://docs.sentry.io/platforms/python/guides/django/
+# https://glitchtip.com/sdkdocs/python-django
+
+if sentry_dsn := os.getenv("SENTRY_DSN"):
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+    from sentry_sdk.utils import get_default_release
+
+    SENTRY_ENVIRONMENT = DJANGO_ENV
+
+    # Attempt to get release version from Sentry's utils and a couple other environment variables
+    def get_release_version():
+        release = get_default_release()
+        # Use GIT_REV for Dokku
+        release = release or os.getenv("GIT_REV")
+        # Use DJANGO_ENV as a final fallback
+        return release or DJANGO_ENV
+
+    sentry_init_args = {
+        "dsn": sentry_dsn,
+        "integrations": [DjangoIntegration()],
+        "environment": SENTRY_ENVIRONMENT,
+        "release": get_release_version(),
+        "traces_sample_rate": 0.01,
+    }
+
+    # Auto session tracking is not supported by GlitchTip
+    if "sentry.io" in sentry_dsn:
+        sentry_init_args["auto_session_tracking"] = True
+    else:
+        sentry_init_args["auto_session_tracking"] = False
+
+    sentry_sdk.init(**sentry_init_args)
+
+    # Enables URL to test Sentry integration
+    SENTRY_TEST_URL_ENABLED = (
+        os.environ.get("SENTRY_TEST_URL_ENABLED", "false").lower() == "true"
+    )
