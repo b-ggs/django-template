@@ -1,9 +1,12 @@
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
+
+from django3_template.home import urls as home_urls
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("", include(home_urls)),
+    path("django-admin/", admin.site.urls),
 ]
 
 if hasattr(settings, "SENTRY_TEST_URL_ENABLED") and settings.SENTRY_TEST_URL_ENABLED:

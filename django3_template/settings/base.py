@@ -16,6 +16,9 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 # Application definition
 
 INSTALLED_APPS = [
+    # Project apps
+    "django3_template.home",
+    # Django core apps
     "django_extensions",
     "django.contrib.admin",
     "django.contrib.auth",

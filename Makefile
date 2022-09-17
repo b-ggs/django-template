@@ -7,5 +7,5 @@ start:
 stop:
 	docker compose down
 
-bash:
+sh:
 	docker compose exec web bash
