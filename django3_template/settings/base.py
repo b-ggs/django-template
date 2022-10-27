@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 import dj_database_url
+from django.db.models import ForeignKey
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -162,3 +163,13 @@ if sentry_dsn := os.getenv("SENTRY_DSN"):
     SENTRY_TEST_URL_ENABLED = (
         os.environ.get("SENTRY_TEST_URL_ENABLED", "false").lower() == "true"
     )
+
+
+# Type stubs
+# https://pypi.org/project/django-types/
+# https://github.com/sbdchd/django-types
+
+# Monkey-patch classes as specified in the README
+
+for cls in [ForeignKey]:
+    cls.__class_getitem__ = classmethod(lambda cls, *args, **kwargs: cls)  # type: ignore [attr-defined]
