@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.10
 
 # Set up user
 RUN useradd --create-home django3_template
