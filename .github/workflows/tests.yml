@@ -1,0 +1,62 @@
+name: Tests
+
+on:
+  push:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres # pragma: allowlist secret
+      SECRET_KEY: test # pragma: allowlist secret
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_PASSWORD: postgres # pragma: allowlist secret
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - "5432:5432"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: Install Poetry
+        run: curl -sSL https://install.python-poetry.org | python3 -
+        env:
+          POETRY_VERSION: "1.2.2"
+      - name: Set up Poetry cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: poetry-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            poetry-
+      - name: Install dependencies with Poetry
+        run: poetry install
+      - name: Run black
+        run: poetry run black --check --diff .
+        if: always()
+      - name: Run isort
+        run: poetry run isort --check --diff .
+        if: always()
+      - name: Run flake8
+        run: poetry run flake8 .
+        if: always()
+      - name: Run bandit
+        run: poetry run bandit -r .
+        if: always()
+      - name: Run detect-secrets
+        run: poetry run detect-secrets scan --baseline .secrets.baseline
+        if: always()
+      - name: Collect staticfiles
+        run: poetry run python3 manage.py collectstatic --noinput
+      - name: Run tests
+        run: poetry run python3 manage.py test --settings=django3_template.settings.test -v=2
