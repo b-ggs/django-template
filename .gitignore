@@ -2,3 +2,5 @@ __pycache__
 .env
 .python-version
 django3_template/staticfiles
+
+node_modules
