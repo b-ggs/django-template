@@ -15,5 +15,5 @@ if hasattr(settings, "SENTRY_TEST_URL_ENABLED") and settings.SENTRY_TEST_URL_ENA
         return 1 / 0
 
     urlpatterns += [
-        path("_trigger-error/", trigger_error),
+        path("_trigger-error/", trigger_error),  # type: ignore
     ]
