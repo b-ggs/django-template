@@ -28,6 +28,10 @@ repos:
       - id: detect-secrets
         args: ["--baseline", ".secrets.baseline"]
         exclude: package.lock.json
+  - repo: https://github.com/rtts/djhtml
+    rev: v1.5.2
+    hooks:
+      - id: djhtml
   - repo: https://github.com/necaris/pre-commit-pyright
     rev: 1.1.53
     hooks:
