@@ -27,6 +27,7 @@ detect-secrets = "^1.4.0"
 django-types = "^0.16.0"
 poetryup = "^0.12.3"
 dslr = "^0.4.0"
+djhtml = "^1.5.2"
 
 [build-system]
 requires = ["poetry-core"]

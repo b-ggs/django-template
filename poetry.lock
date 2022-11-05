@@ -178,6 +178,17 @@ optional = false
 python-versions = ">=3.7,<4.0"
 
 [[package]]
+name = "djhtml"
+version = "1.5.2"
+description = "Django/Jinja template indenter"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.extras]
+dev = ["black", "flake8", "isort", "nox", "pre-commit"]
+
+[[package]]
 name = "dslr"
 version = "0.4.0"
 description = "Take lightning fast snapshots of your local Postgres databases."
@@ -692,7 +703,7 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "69d9202d80f0facec344e186b900c1d61e8f7469bca1e7ea773e56f4487ec87b"
+content-hash = "629e287829c8d05e4f06addcc773ec1256d12328a9da75257874111eeb03ae4d"
 
 [metadata.files]
 asgiref = [
@@ -773,6 +784,9 @@ django-extensions = [
 django-types = [
     {file = "django-types-0.16.0.tar.gz", hash = "sha256:29d23af8b88fa1579b47418e92ffc1d89bfbdf11eab64d2ae006fa09e54fed9a"},
     {file = "django_types-0.16.0-py3-none-any.whl", hash = "sha256:9df4e1936f304f309a59f4cee19a607e151282fc0d97238833a382fafc5052c8"},
+]
+djhtml = [
+    {file = "djhtml-1.5.2.tar.gz", hash = "sha256:b54c4ab6effaf3dbe87d616ba30304f1dba22f07127a563df4130a71acc290ea"},
 ]
 dslr = [
     {file = "DSLR-0.4.0.tar.gz", hash = "sha256:32d132628de5767ed3fe2bfdd755374dd76da1fbe3b0b56c4c489ced1365e8f5"},
