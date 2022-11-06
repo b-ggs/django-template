@@ -1,6 +1,4 @@
-# https://docs.gunicorn.org/en/stable/settings.html
-
-from os import cpu_count
+import os
 
 # Log to stdout
 # https://docs.gunicorn.org/en/stable/settings.html#accesslog
@@ -14,13 +12,14 @@ max_requests = 1000
 
 # Number of workers
 # https://docs.gunicorn.org/en/stable/settings.html#workers
-# Gunicorn docs recommend (number of cores * 2~4)
 
 
 def get_max_workers() -> int:
-    if count := cpu_count():
+    # Gunicorn recommends (number of cores * 2~4)
+    if count := os.cpu_count():
         return (count * 2) + 1
     return 3
 
 
-workers = get_max_workers()
+# Check if WEB_CONCURRENCY is available, else use recommended based on CPU count
+workers = int(os.getenv("WEB_CONCURRENCY", get_max_workers()))
