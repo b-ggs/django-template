@@ -1,16 +1,18 @@
-FROM python:3.10
+FROM python:3.10 as production
 
 # Set up user
 RUN useradd --create-home django3_template
 
 # Set up project directory
 ENV APP_DIR=/app
-RUN mkdir -p "$APP_DIR" && chown -R django3_template "$APP_DIR"
+RUN mkdir -p "$APP_DIR" \
+  && chown -R django3_template "$APP_DIR"
 
 # Set up virtualenv
 ENV VIRTUAL_ENV=/venv
 ENV PATH=$VIRTUAL_ENV/bin:$PATH
-RUN mkdir -p "$VIRTUAL_ENV" && chown -R django3_template:django3_template "$VIRTUAL_ENV"
+RUN mkdir -p "$VIRTUAL_ENV" \
+  && chown -R django3_template:django3_template "$VIRTUAL_ENV"
 
 # Install poetry
 ENV POETRY_VERSION=1.2.2
@@ -32,10 +34,11 @@ WORKDIR $APP_DIR
 ENV PYTHONUNBUFFERED=1 \
     PORT=8000
 
-# Install project dependencies
+# Install main project dependencies
 RUN python -m venv $VIRTUAL_ENV
 COPY --chown=django3_template pyproject.toml poetry.lock ./
-RUN pip install --upgrade pip && poetry install --no-root
+RUN pip install --upgrade pip \
+  && poetry install --no-root --only main
 
 # Port used by this container to serve HTTP.
 EXPOSE 8000
@@ -47,3 +50,8 @@ COPY --chown=django3_template:django3_template . .
 RUN SECRET_KEY=dummy python3 manage.py collectstatic --noinput --clear
 
 CMD ["gunicorn", "django3_template.wsgi:application"]
+
+FROM production AS dev
+
+# Install main and dev project dependencies
+RUN poetry install --no-root
