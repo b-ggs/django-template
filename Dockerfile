@@ -1,3 +1,4 @@
+# Production build stage
 FROM python:3.10 as production
 
 # Set up user
@@ -51,7 +52,11 @@ RUN SECRET_KEY=dummy python3 manage.py collectstatic --noinput --clear
 
 CMD ["gunicorn", "django3_template.wsgi:application"]
 
+# Dev build stage
 FROM production AS dev
 
 # Install main and dev project dependencies
 RUN poetry install --no-root
+
+# Add bash aliases
+COPY docker/.bash_aliases /home/django3_template/.bash_aliases
