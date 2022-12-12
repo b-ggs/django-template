@@ -16,6 +16,7 @@ RUN mkdir -p "$VIRTUAL_ENV" \
   && chown -R django3_template:django3_template "$VIRTUAL_ENV"
 
 # Install poetry
+# Make sure poetry version is in sync with CI configs
 ENV POETRY_VERSION=1.3.1
 ENV POETRY_HOME=/opt/poetry
 ENV PATH=$POETRY_HOME/bin:$PATH
