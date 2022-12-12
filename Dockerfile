@@ -16,7 +16,7 @@ RUN mkdir -p "$VIRTUAL_ENV" \
   && chown -R django3_template:django3_template "$VIRTUAL_ENV"
 
 # Install poetry
-ENV POETRY_VERSION=1.2.2
+ENV POETRY_VERSION=1.3.1
 ENV POETRY_HOME=/opt/poetry
 ENV PATH=$POETRY_HOME/bin:$PATH
 RUN curl -sSL https://install.python-poetry.org | python3 - \
