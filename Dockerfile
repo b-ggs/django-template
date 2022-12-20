@@ -60,4 +60,8 @@ FROM production AS dev
 RUN poetry install --no-root
 
 # Add bash aliases
-COPY docker/.bash_aliases /home/django3_template/.bash_aliases
+RUN echo "alias dj='./manage.py'" >> $HOME/.bash_aliases
+RUN echo "alias djrun='./manage.py runserver 0:8000'" >> $HOME/.bash_aliases
+
+# Add poetry-plugin-up
+RUN poetry self add poetry-plugin-up

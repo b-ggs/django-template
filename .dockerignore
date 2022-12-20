@@ -3,4 +3,7 @@ __pycache__
 .python-version
 django3_template/staticfiles
 
+Dockerfile
+compose.yml
+
 node_modules
