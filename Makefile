@@ -19,3 +19,4 @@ test-keepdb:
 bump-deps:
 	docker compose run --no-deps web poetry up
 	npx ncu -u
+	npm install
