@@ -17,6 +17,5 @@ test-keepdb:
 	docker compose exec web python3 manage.py test --settings=django3_template.settings.test -v=2 --keepdb
 
 bump-deps:
-	poetry run poetryup
+	docker compose run --no-deps web poetry up
 	npx ncu -u
-	npm install
