@@ -45,6 +45,15 @@ dokku config:set django3-template ALLOWED_HOSTS=django3-template.example.com
 dokku config:set django3-template SENTRY_DSN=https://sentry-dsn-here.com/
 ```
 
+## Configure Dokku to build and release the `production` Docker image stage
+
+```bash
+# On your Dokku host:
+
+# Add "--target production" to the build args
+dokku docker-options:add django3-template build "--target production"
+```
+
 ## Configure git and push your app
 
 ```bash
