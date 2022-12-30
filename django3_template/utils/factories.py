@@ -10,7 +10,10 @@ class MyModel:
 
 # factories.py
 
-class MyModelFactory(factory.Factory, metaclass=BaseMetaFactory[MyModel]):
+class MyModelFactory(
+    factory.django.DjangoModelFactory,
+    metaclass=BaseMetaFactory[MyModel],
+):
     class Meta:
         model = MyModel
 
