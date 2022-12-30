@@ -5,5 +5,6 @@ django3_template/staticfiles
 
 Dockerfile
 compose.yml
+docs
 
 node_modules
