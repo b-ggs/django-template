@@ -16,6 +16,11 @@ if allowed_hosts := os.getenv("ALLOWED_HOSTS"):
 else:
     ALLOWED_HOSTS = []
 
+if csrf_trusted_origins := os.getenv("CSRF_TRUSTED_ORIGINS"):
+    CSRF_TRUSTED_ORIGINS = csrf_trusted_origins.split(",")
+else:
+    CSRF_TRUSTED_ORIGINS = []
+
 
 # Application definition
 
