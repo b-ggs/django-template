@@ -74,7 +74,7 @@ WSGI_APPLICATION = "django_template.wsgi.application"
 
 
 # Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 if "DATABASE_URL" in os.environ:
     DATABASES = {
@@ -83,7 +83,7 @@ if "DATABASE_URL" in os.environ:
 
 
 # Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
+# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -102,7 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
+# https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
 
@@ -116,7 +116,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
+# https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
@@ -128,12 +128,12 @@ STATIC_URL = "/static/"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Logging
-# https://docs.djangoproject.com/en/3.2/topics/logging/#configuring-logging
+# https://docs.djangoproject.com/en/4.1/topics/logging/#configuring-logging
 
 # Log everything from INFO above to stdout
 LOGGING = {
