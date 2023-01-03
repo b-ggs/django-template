@@ -90,6 +90,8 @@ djrun
 
 The Django app will be available at http://localhost:8000/.
 
+Check out the [Makefile](Makefile) for other useful commands.
+
 ## Deploying to a managed or self-hosted service
 
 - [Deploying to Dokku](docs/deploying_to_dokku.md)
