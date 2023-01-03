@@ -4,6 +4,7 @@ A template project with:
 
 - Python 3.10
 - Django 4.1
+- Postgres 14
 
 ## Features
 
@@ -25,19 +26,30 @@ Clone this project locally.
 
 Replace all instances of `django_template` and `django-template` with your project's name in snake_case and kebab-case, respectively.
 
-TODO: One-liner to replace all instances of `django{_,-}template`.
+```bash
+# Replace these variables with your project's name
+export PROJECT_NAME_CAMEL_CASE=my_project_name
+export PROJECT_NAME_KEBAB_CASE=my-project-name
+
+# Replace the top-level app name with `$PROJECT_NAME_CAMEL_CASE`
+mv django_template "$PROJECT_NAME_CAMEL_CASE"
+
+# Replace all instances of `django_template` with `$PROJECT_NAME_CAMEL_CASE`
+grep -rl django_template . | xargs sed -i "s/django_template/$PROJECT_NAME_CAMEL_CASE/g"
+
+# Replace all instances of `django-template` with `$PROJECT_NAME_KEBAB_CASE`
+grep -rl django-template . | xargs sed -i "s/django-template/$PROJECT_NAME_KEBAB_CASE/g"
+```
 
 Remove the `.git` directory and replace with your project's git configuration.
 
-## Developing locally
+## Running the project locally
 
 Ensure that you have the following installed:
 
 - GNU or BSD Make
 - Docker
 - Docker Compose
-- Python 3.10
-- Node 18
 
 Build your development environment.
 
@@ -65,19 +77,19 @@ Several bash aliases exist in the Django Docker container such as:
 Run all outstanding migrations.
 
 ```bash
-# Inside the Docker container
+# Inside the Django Docker container
 dj migrate
 ```
 
 Spin up the development server.
 
 ```bash
-# Inside the Docker container
+# Inside the Django Docker container
 djrun
 ```
 
-Your Django app will be available at http://localhost:8000/.
+The Django app will be available at http://localhost:8000/.
 
-## Deployment
+## Deploying to a managed or self-hosted service
 
 - [Deploying to Dokku](docs/deploying_to_dokku.md)
