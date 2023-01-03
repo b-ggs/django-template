@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 
-from django3_template.home import urls as home_urls
+from django_template.home import urls as home_urls
 
 urlpatterns = [
     path("", include(home_urls)),

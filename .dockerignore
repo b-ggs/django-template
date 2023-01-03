@@ -1,7 +1,7 @@
 __pycache__
 .env
 .python-version
-django3_template/staticfiles
+django_template/staticfiles
 
 Dockerfile
 compose.yml

@@ -11,10 +11,10 @@ sh:
 	docker compose exec web bash
 
 test:
-	docker compose exec web python3 manage.py test --settings=django3_template.settings.test -v=2
+	docker compose exec web python3 manage.py test --settings=django_template.settings.test -v=2
 
 test-keepdb:
-	docker compose exec web python3 manage.py test --settings=django3_template.settings.test -v=2 --keepdb
+	docker compose exec web python3 manage.py test --settings=django_template.settings.test -v=2 --keepdb
 
 bump-deps:
 	docker compose run --no-deps web poetry up

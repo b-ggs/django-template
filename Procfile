@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn django3_template.wsgi:application
+web: gunicorn django_template.wsgi:application

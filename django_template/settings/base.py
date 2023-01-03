@@ -21,8 +21,8 @@ else:
 
 INSTALLED_APPS = [
     # Project apps
-    "django3_template.home",
-    "django3_template.utils",
+    "django_template.home",
+    "django_template.utils",
     # Django core apps
     "django_extensions",
     "django.contrib.admin",
@@ -47,7 +47,7 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
-ROOT_URLCONF = "django3_template.urls"
+ROOT_URLCONF = "django_template.urls"
 
 TEMPLATES = [
     {
@@ -65,7 +65,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "django3_template.wsgi.application"
+WSGI_APPLICATION = "django_template.wsgi.application"
 
 
 # Database

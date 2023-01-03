@@ -1,9 +1,9 @@
-# django3-template
+# django-template
 
 A template project with:
 
 - Python 3.10
-- Django 3.2 LTS
+- Django 4.1
 
 ## Features
 

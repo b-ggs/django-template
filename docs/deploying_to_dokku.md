@@ -14,8 +14,8 @@ sudo dokku plugin:install https://github.com/dokku/dokku-postgres.git postgres
 ```bash
 # On your Dokku host:
 
-# Create a new app with the name django3-template
-dokku apps:create django3-template
+# Create a new app with the name django-template
+dokku apps:create django-template
 ```
 
 ## Configure Postgres service
@@ -24,10 +24,10 @@ dokku apps:create django3-template
 # On your Dokku host:
 
 # Create a new Postgres service
-dokku postgres:create django3-template-postgres
+dokku postgres:create django-template-postgres
 
 # Link the Postgres service to your Dokku app
-dokku postgres:link django3-template-postgres django3-template
+dokku postgres:link django-template-postgres django-template
 ```
 
 ## Configure environment variables
@@ -36,13 +36,13 @@ dokku postgres:link django3-template-postgres django3-template
 # On your Dokku host:
 
 # Generate and set SECRET_KEY
-dokku config:set django3-template SECRET_KEY=$(python3 -c "import secrets; print(''.join(secrets.choice([chr(i) for i in range(0x21, 0x7F)]) for i in range(60)));")
+dokku config:set django-template SECRET_KEY=$(python3 -c "import secrets; print(''.join(secrets.choice([chr(i) for i in range(0x21, 0x7F)]) for i in range(60)));")
 
 # Set ALLOWED_HOSTS
-dokku config:set django3-template ALLOWED_HOSTS=django3-template.example.com
+dokku config:set django-template ALLOWED_HOSTS=django-template.example.com
 
 # Set SENTRY_DSN
-dokku config:set django3-template SENTRY_DSN=https://sentry-dsn-here.com/
+dokku config:set django-template SENTRY_DSN=https://sentry-dsn-here.com/
 ```
 
 ## Configure Dokku to build and release the `production` Docker image stage
@@ -51,7 +51,7 @@ dokku config:set django3-template SENTRY_DSN=https://sentry-dsn-here.com/
 # On your Dokku host:
 
 # Add "--target production" to the build args
-dokku docker-options:add django3-template build "--target production"
+dokku docker-options:add django-template build "--target production"
 ```
 
 ## Configure git and push your app
@@ -59,7 +59,7 @@ dokku docker-options:add django3-template build "--target production"
 ```bash
 # On your development machine:
 
-git remote add dokku dokku@example.com:django3-template
+git remote add dokku dokku@example.com:django-template
 git push dokku main
 ```
 
@@ -71,7 +71,7 @@ Assuming you have a `tar` file with your certificates
 # On your Dokku host:
 
 # Add your certificates to the app
-dokku certs:add django3-template < /path/to/certs/django3-template.example.com.tar
+dokku certs:add django-template < /path/to/certs/django-template.example.com.tar
 ```
 
 ## Configure networking
@@ -80,5 +80,5 @@ dokku certs:add django3-template < /path/to/certs/django3-template.example.com.t
 # On your Dokku host:
 
 # Forward requests from host ports 80 and 443 to container port 8000
-dokku proxy:ports-set django3-template http:80:8000 https:443:8000
+dokku proxy:ports-set django-template http:80:8000 https:443:8000
 ```
