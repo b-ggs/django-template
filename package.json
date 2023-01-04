@@ -8,6 +8,6 @@
   "devDependencies": {
     "npm-check-updates": "^16.6.2",
     "prettier": "^2.8.1",
-    "pyright": "^1.1.286"
+    "pyright": "^1.1.287"
   }
 }
