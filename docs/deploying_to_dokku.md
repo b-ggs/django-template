@@ -42,7 +42,7 @@ dokku config:set django-template SECRET_KEY=$(python3 -c "import secrets; print(
 dokku config:set django-template ALLOWED_HOSTS=django-template.example.com
 
 # Set CSRF_TRUSTED_ORIGINS
-dokku config:set kalokohan CSRF_TRUSTED_ORIGINS=https://django-template.example.com
+dokku config:set django-template CSRF_TRUSTED_ORIGINS=https://django-template.example.com
 
 # Set SENTRY_DSN
 dokku config:set django-template SENTRY_DSN=https://sentry-dsn-here.com/
