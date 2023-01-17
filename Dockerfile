@@ -1,4 +1,5 @@
 # Production build stage
+# Make sure Python version is in sync with CI configs
 FROM python:3.11 as production
 
 # Set up user
@@ -15,8 +16,8 @@ ENV PATH=$VIRTUAL_ENV/bin:$PATH
 RUN mkdir -p "$VIRTUAL_ENV" \
   && chown -R django_template:django_template "$VIRTUAL_ENV"
 
-# Install poetry
-# Make sure poetry version is in sync with CI configs
+# Install Poetry
+# Make sure Poetry version is in sync with CI configs
 ENV POETRY_VERSION=1.3.2
 ENV POETRY_HOME=/opt/poetry
 ENV PATH=$POETRY_HOME/bin:$PATH
