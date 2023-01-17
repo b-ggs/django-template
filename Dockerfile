@@ -17,7 +17,7 @@ RUN mkdir -p "$VIRTUAL_ENV" \
 
 # Install poetry
 # Make sure poetry version is in sync with CI configs
-ENV POETRY_VERSION=1.3.1
+ENV POETRY_VERSION=1.3.2
 ENV POETRY_HOME=/opt/poetry
 ENV PATH=$POETRY_HOME/bin:$PATH
 RUN curl -sSL https://install.python-poetry.org | python3 - \
