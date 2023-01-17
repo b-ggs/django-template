@@ -1,5 +1,5 @@
 # Production build stage
-FROM python:3.10 as production
+FROM python:3.11 as production
 
 # Set up user
 RUN useradd --create-home django_template

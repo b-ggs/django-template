@@ -65,7 +65,6 @@ click = ">=8.0.0"
 mypy-extensions = ">=0.4.3"
 pathspec = ">=0.9.0"
 platformdirs = ">=2"
-tomli = {version = ">=1.1.0", markers = "python_full_version < \"3.11.0a7\""}
 
 [package.extras]
 colorama = ["colorama (>=0.4.3)"]
@@ -389,14 +388,14 @@ doc = ["Sphinx", "sphinx-rtd-theme", "sphinxcontrib-spelling"]
 
 [[package]]
 name = "faker"
-version = "16.5.0"
+version = "16.6.0"
 description = "Faker is a Python package that generates fake data for you."
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "Faker-16.5.0-py3-none-any.whl", hash = "sha256:fe28a26bc9f75c2df503a3509b462730a5dc63dfc15f38185da813782ac644d0"},
-    {file = "Faker-16.5.0.tar.gz", hash = "sha256:c62d25f3f78b76e839f27213d913e6463a971f71772bed384f0a18328a99d0ee"},
+    {file = "Faker-16.6.0-py3-none-any.whl", hash = "sha256:0a74514d654db0a3d37b9ca681f2d9182d2ec556f78b4f1a842a2ccc944660cd"},
+    {file = "Faker-16.6.0.tar.gz", hash = "sha256:dc8b2a8bf0d852d26eacf7763afd5e7d6e9e50d80ec648b51b8ecd3c505435fd"},
 ]
 
 [package.dependencies]
@@ -994,5 +993,5 @@ brotli = ["Brotli"]
 
 [metadata]
 lock-version = "2.0"
-python-versions = "^3.10"
-content-hash = "6f0fba831d24d8a313c33c2f57d73cb4c75043083ba4d46981e60bea66075283"
+python-versions = "^3.11"
+content-hash = "857098d57f1b36eb1d8970e584c1f80c72cdfc2c730c4c367453532d7086dcf7"
