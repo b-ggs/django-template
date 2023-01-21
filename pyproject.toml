@@ -2,7 +2,7 @@
 name = "django-template"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["boggs <hello@boggs.xyz>"]
 readme = "README.md"
 packages = [{include = "django_template"}]
 
