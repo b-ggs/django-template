@@ -1,6 +1,6 @@
 # Production build stage
 # Make sure Python version is in sync with CI configs
-FROM python:3.11 as production
+FROM python:3.11-bullseye as production
 
 # Set up user
 RUN useradd --create-home django_template
@@ -57,12 +57,25 @@ CMD ["gunicorn", "django_template.wsgi:application"]
 # Dev build stage
 FROM production AS dev
 
+# Temporarily switch to install packages from apt
+USER root
+
+# Install Postgres client for dslr import and export
+RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
+  && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+  && apt-get update \
+  && apt-get -y install postgresql-client-14 \
+  && rm -rf /var/lib/apt/lists/*
+
+# Switch back to unprivileged user
+USER django_template
+
 # Install main and dev project dependencies
 RUN poetry install --no-root
+
+# Add poetry-plugin-up
+RUN poetry self add poetry-plugin-up
 
 # Add bash aliases
 RUN echo "alias dj='./manage.py'" >> $HOME/.bash_aliases
 RUN echo "alias djrun='./manage.py runserver 0:8000'" >> $HOME/.bash_aliases
-
-# Add poetry-plugin-up
-RUN poetry self add poetry-plugin-up

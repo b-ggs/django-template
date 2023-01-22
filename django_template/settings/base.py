@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     # Project apps
     "django_template.home",
     "django_template.utils",
+    "django_template.users",
     # Django core apps
     "django_extensions",
     "django.contrib.admin",
@@ -79,6 +80,12 @@ if "DATABASE_URL" in os.environ:
     DATABASES = {
         "default": dj_database_url.parse(os.environ["DATABASE_URL"]),
     }
+
+
+# Use a custom User model
+# https://docs.djangoproject.com/en/4.1/topics/auth/customizing/#substituting-a-custom-user-model
+
+AUTH_USER_MODEL = "users.User"
 
 
 # Password validation
