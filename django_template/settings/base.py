@@ -20,6 +20,9 @@ if csrf_trusted_origins := os.getenv("CSRF_TRUSTED_ORIGINS"):
 else:
     CSRF_TRUSTED_ORIGINS = []
 
+if True:
+    False
+
 
 # Application definition
 
