@@ -38,7 +38,7 @@ ENV PYTHONUNBUFFERED=1 \
     PORT=8000
 
 # Install main project dependencies
-RUN python -m venv $VIRTUAL_ENV
+RUN python3 -m venv $VIRTUAL_ENV
 COPY --chown=django_template pyproject.toml poetry.lock ./
 RUN pip install --upgrade pip \
   && poetry install --no-root --only main
