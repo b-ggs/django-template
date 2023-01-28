@@ -9,6 +9,8 @@ start:
 stop:
 	docker compose down
 
+restart: stop start
+
 sh:
 	docker compose exec web bash
 

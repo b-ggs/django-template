@@ -79,3 +79,5 @@ RUN poetry self add poetry-plugin-up
 # Add bash aliases
 RUN echo "alias dj='./manage.py'" >> $HOME/.bash_aliases
 RUN echo "alias djrun='./manage.py runserver 0:8000'" >> $HOME/.bash_aliases
+RUN echo "alias djtest='./manage.py test --settings=django_template.settings.test -v=2'" >> $HOME/.bash_aliases
+RUN echo "alias djtestkeepdb='./manage.py test --settings=django_template.settings.test -v=2 --keepdb'" >> $HOME/.bash_aliases
