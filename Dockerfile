@@ -62,7 +62,7 @@ USER root
 
 # Install Postgres client for dslr import and export
 RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
-  && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+  && curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null \
   && apt-get update \
   && apt-get -y install postgresql-client-14 \
   && rm -rf /var/lib/apt/lists/*
