@@ -1,0 +1,11 @@
+#: django_template/home/templates/home/index.html:6
+msgid "Welcome to your new site!"
+msgstr "Maligayang pagdating sa iyong bagong site!"
+
+#: django_template/settings/base.py:109
+msgid "English"
+msgstr "Ingles"
+
+#: django_template/settings/base.py:110
+msgid "Tagalog"
+msgstr ""

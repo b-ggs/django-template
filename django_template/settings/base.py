@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 import dj_database_url
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,9 +21,6 @@ if csrf_trusted_origins := os.getenv("CSRF_TRUSTED_ORIGINS"):
 else:
     CSRF_TRUSTED_ORIGINS = []
 
-if True:
-    False
-
 
 # Application definition
 
@@ -31,8 +29,9 @@ INSTALLED_APPS = [
     "django_template.home",
     "django_template.utils",
     "django_template.users",
-    # Django core apps
+    # Third-party apps
     "django_extensions",
+    # Django core apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -49,6 +48,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     # Simplified static file serving
     # https://devcenter.heroku.com/articles/django-assets
     # https://warehouse.python.org/project/whitenoise/
@@ -83,6 +83,34 @@ if "DATABASE_URL" in os.environ:
     DATABASES = {
         "default": dj_database_url.parse(os.environ["DATABASE_URL"]),
     }
+
+
+# Email
+# https://docs.djangoproject.com/en/4.1/topics/email/
+
+EMAIL_HOST = os.getenv("EMAIL_HOST", "localhost")
+EMAIL_PORT = int(os.getenv("EMAIL_PORT", "25"))
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "false").lower() == "true"
+EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL", "false").lower() == "true"
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "django_template@localhost")
+
+
+# Internationalization and localization
+# https://docs.djangoproject.com/en/4.1/topics/i18n/
+# https://docs.djangoproject.com/en/4.1/ref/settings/#std-setting-LANGUAGE_CODE
+# https://docs.djangoproject.com/en/4.1/ref/settings/#languages
+# https://docs.djangoproject.com/en/4.1/ref/settings/#locale-paths
+
+LANGUAGE_CODE = "en"
+
+LANGUAGES = [
+    ("en", _("English")),
+    ("tl", _("Tagalog")),
+]
+
+LOCALE_PATHS = [os.path.join(BASE_DIR, "locale")]
 
 
 # Use a custom User model
