@@ -2,6 +2,9 @@ name: Tests
 
 on:
   push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   tests:
@@ -78,6 +81,10 @@ jobs:
 
       - name: Run prettier
         run: poetry run npx prettier --check .
+        if: always()
+
+      - name: Check for missing migrations
+        run: poetry run python manage.py makemigrations --check --noinput
         if: always()
 
       - name: Collect staticfiles
