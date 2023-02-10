@@ -7,4 +7,4 @@ class User(AbstractUser):
 
 
 class TestModel(models.Model):
-    test = models.CharField()
+    test = models.CharField(max_length=7)
