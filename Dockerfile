@@ -1,8 +1,11 @@
-# Production build stage
-# Make sure Python version is in sync with CI configs
-FROM python:3.11-bullseye as production
+####################
+# Base build stage #
+####################
 
-# Set up user
+# Make sure Python version is in sync with CI configs
+FROM python:3.11-bullseye AS base
+
+# Set up unprivileged user
 RUN useradd --create-home django_template
 
 # Set up project directory
@@ -31,9 +34,9 @@ USER django_template
 WORKDIR $APP_DIR
 
 # Set environment variables
-# 1. Force Python stdout and stderr streams to be unbuffered.
-# 2. Set PORT variable that is used by Gunicorn. This should match "EXPOSE"
-#    command.
+# - PYTHONUNBUFFERED: Force Python stdout and stderr streams to be unbuffered
+# - PORT: Set port that is used by Gunicorn. This should match the "EXPOSE"
+#   command
 ENV PYTHONUNBUFFERED=1 \
     PORT=8000
 
@@ -43,37 +46,49 @@ COPY --chown=django_template pyproject.toml poetry.lock ./
 RUN pip install --upgrade pip \
   && poetry install --no-root --only main
 
-# Port used by this container to serve HTTP.
+# Port used by this container to serve HTTP
 EXPOSE 8000
 
-# Copy the source code of the project into the container.
-COPY --chown=django_template:django_template . .
-
-# Collect static files.
-RUN SECRET_KEY=dummy python3 manage.py collectstatic --noinput --clear
-
+# Serve project with gunicorn
 CMD ["gunicorn", "django_template.wsgi:application"]
 
-# Dev build stage
-FROM production AS dev
+##########################
+# Production build stage #
+##########################
+
+FROM base AS production
+
+# Copy the project files
+# Ensure that this is one of the last commands for better layer caching
+COPY --chown=django_template:django_template . .
+
+# Collect static files
+RUN SECRET_KEY=dummy python3 manage.py collectstatic --noinput --clear
+
+###################
+# Dev build stage #
+###################
+
+FROM base AS dev
 
 # Temporarily switch to install packages from apt
 USER root
 
 # Install Postgres client for dslr import and export
+# Install gettext for i18n
 RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
   && curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null \
   && apt-get update \
-  && apt-get -y install postgresql-client-14 \
+  && apt-get -y install postgresql-client-14 gettext \
   && rm -rf /var/lib/apt/lists/*
 
 # Switch back to unprivileged user
 USER django_template
 
-# Install main and dev project dependencies
+# Install all project dependencies
 RUN poetry install --no-root
 
-# Add poetry-plugin-up
+# Install poetry-plugin-up for bumping Poetry dependencies
 RUN poetry self add poetry-plugin-up
 
 # Add bash aliases
@@ -81,3 +96,10 @@ RUN echo "alias dj='./manage.py'" >> $HOME/.bash_aliases
 RUN echo "alias djrun='./manage.py runserver 0:8000'" >> $HOME/.bash_aliases
 RUN echo "alias djtest='./manage.py test --settings=django_template.settings.test -v=2'" >> $HOME/.bash_aliases
 RUN echo "alias djtestkeepdb='./manage.py test --settings=django_template.settings.test -v=2 --keepdb'" >> $HOME/.bash_aliases
+
+# Copy the project files
+# Ensure that this is one of the last commands for better layer caching
+COPY --chown=django_template:django_template . .
+
+# Collect static files
+RUN SECRET_KEY=dummy python3 manage.py collectstatic --noinput --clear
