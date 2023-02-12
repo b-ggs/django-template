@@ -6,39 +6,48 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-added-large-files
+
   - repo: https://github.com/psf/black
     rev: 23.1.0
     hooks:
       - id: black
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.12.0
+
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.0.244
     hooks:
-      - id: isort
-  - repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
-    hooks:
-      - id: flake8
+      - id: ruff
+        args:
+          - --fix
+
   - repo: https://github.com/PyCQA/bandit
     rev: 1.7.4
     hooks:
       - id: bandit
+
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.4.0
     hooks:
       - id: detect-secrets
-        args: ["--baseline", ".secrets.baseline"]
+        args:
+          - --baseline
+          - .secrets.baseline
         exclude: package.lock.json
+
   - repo: https://github.com/rtts/djhtml
     rev: v2.0.0
     hooks:
       - id: djhtml
+
   - repo: https://github.com/necaris/pre-commit-pyright
     rev: 1.1.53
     hooks:
       - id: pyright
-        additional_dependencies: ["pyright@1.1.293"]
+        additional_dependencies:
+          - pyright@1.1.293
+
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.7.1
     hooks:
       - id: prettier
-        additional_dependencies: ["prettier@2.8.4"]
+        additional_dependencies:
+          - prettier@2.8.4
