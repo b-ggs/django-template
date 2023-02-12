@@ -55,12 +55,8 @@ jobs:
         run: poetry run black --check --diff .
         if: always()
 
-      - name: Run isort
-        run: poetry run isort --check --diff .
-        if: always()
-
-      - name: Run flake8
-        run: poetry run flake8 .
+      - name: Run ruff
+        run: poetry run ruff --diff .
         if: always()
 
       - name: Run bandit

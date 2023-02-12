@@ -124,7 +124,9 @@ AUTH_USER_MODEL = "users.User"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": (
+            "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+        ),
     },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
@@ -206,7 +208,8 @@ if sentry_dsn := os.getenv("SENTRY_DSN"):
 
     SENTRY_ENVIRONMENT = DJANGO_ENV
 
-    # Attempt to get release version from Sentry's utils and a couple other environment variables
+    # Attempt to get release version from Sentry's utils and a couple other
+    # environment variables
     def get_release_version():
         release = get_default_release()
         # Use GIT_REV for Dokku
