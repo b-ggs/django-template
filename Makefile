@@ -24,3 +24,13 @@ bump-deps:
 	docker compose run --rm --no-deps web poetry up
 	npx npm-check-updates -u
 	npm install
+
+rename:
+	@if [ -z "$$NAME" ]; then \
+		echo "Usage:"; \
+		echo "    make rename NAME=my_project_name_with_underscores"; \
+		echo ""; \
+		exit 1; \
+	fi
+	NAME_KEBAB=$$(echo $$NAME | sed "s/_/-/g")
+	echo $$NAME_KEBAB
