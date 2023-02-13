@@ -35,10 +35,10 @@ export PROJECT_NAME_KEBAB_CASE=my-project-name
 mv django_template "$PROJECT_NAME_CAMEL_CASE"
 
 # Replace all instances of `django_template` with `$PROJECT_NAME_CAMEL_CASE`
-grep -rl django_template . | xargs sed -i "s/django_template/$PROJECT_NAME_CAMEL_CASE/g"
+grep -rl django_template . | xargs perl -i -pe "s/django_template/$PROJECT_NAME_CAMEL_CASE/g"
 
 # Replace all instances of `django-template` with `$PROJECT_NAME_KEBAB_CASE`
-grep -rl django-template . | xargs sed -i "s/django-template/$PROJECT_NAME_KEBAB_CASE/g"
+grep -rl django-template . | xargs perl -i -pe "s/django-template/$PROJECT_NAME_KEBAB_CASE/g"
 ```
 
 Remove the `.git` directory and replace with your project's git configuration.
