@@ -5,7 +5,7 @@
     "node": ">=18.0.0 <19.0.0"
   },
   "devDependencies": {
-    "npm-check-updates": "^16.7.5",
+    "npm-check-updates": "^16.7.9",
     "prettier": "^2.8.4",
     "pyright": "^1.1.294"
   }
