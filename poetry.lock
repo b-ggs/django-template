@@ -335,14 +335,14 @@ Django = ">=3.2"
 
 [[package]]
 name = "django-types"
-version = "0.16.0"
+version = "0.17.0"
 description = "Type stubs for Django"
 category = "dev"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "django-types-0.16.0.tar.gz", hash = "sha256:29d23af8b88fa1579b47418e92ffc1d89bfbdf11eab64d2ae006fa09e54fed9a"},
-    {file = "django_types-0.16.0-py3-none-any.whl", hash = "sha256:9df4e1936f304f309a59f4cee19a607e151282fc0d97238833a382fafc5052c8"},
+    {file = "django-types-0.17.0.tar.gz", hash = "sha256:c1c42ab78876c57c728342d5ab060725ab371fc8dc83bb85bae0be06846aad70"},
+    {file = "django_types-0.17.0-py3-none-any.whl", hash = "sha256:43d4931159524c1a08b25c1b9a4db2512b7c1234b64b1d4db4aff78881d6afd0"},
 ]
 
 [[package]]
@@ -977,4 +977,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "4b01b25a658313a4e20c31b20369399707c257309696a314d5c55cd98367329e"
+content-hash = "556458f2450db8c2ba33b6dc6d3ea58b8f26130ad80a3d2084f80b7fe6895773"
