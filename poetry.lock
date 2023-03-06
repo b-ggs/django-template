@@ -347,13 +347,13 @@ files = [
 
 [[package]]
 name = "djhtml"
-version = "3.0.2"
+version = "3.0.3"
 description = "Django/Jinja template indenter"
 category = "dev"
 optional = false
 python-versions = "*"
 files = [
-    {file = "djhtml-3.0.2.tar.gz", hash = "sha256:f260cdfe7033b21ebc01961db7e1c8832fd5830ec9af1b0e57f3e1f58deb1bd0"},
+    {file = "djhtml-3.0.3.tar.gz", hash = "sha256:534deac3d2e474ccbd6daac0de458a3e0ae20e9c2d4b1ca496258bd62a328a18"},
 ]
 
 [package.extras]
@@ -978,4 +978,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "da10eb278414997f61feb93f82d8494c40f2ac4daef6b32085288de70e732621"
+content-hash = "02e384bc8a96709ba83ecdad6f50706a884e21d0aeaf0d7aa79516001d671806"
