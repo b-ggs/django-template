@@ -23,7 +23,7 @@ ruff = "^0.0.254"
 pre-commit = "^3.1.1"
 bandit = "^1.7.5"
 detect-secrets = "^1.4.0"
-djhtml = "^3.0.5"
+djhtml = "^3.0.6"
 dslr = "^0.4.0"
 django-types = "^0.17.0"
 
