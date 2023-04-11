@@ -24,7 +24,7 @@ A template project with:
 
 Clone this project locally.
 
-Ensure that you have GNU or BSD make installed.
+Ensure that you have GNU or BSD Make installed.
 
 Run the `rename` Makefile target to replace all instances of `django_template` and `django-template` with your project's name in snake_case and kebab-case, respectively.
 
