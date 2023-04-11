@@ -21,7 +21,7 @@ RUN mkdir -p "$VIRTUAL_ENV" \
 
 # Install Poetry
 # Make sure Poetry version is in sync with CI configs
-ENV POETRY_VERSION=1.3.2
+ENV POETRY_VERSION=1.4.2
 ENV POETRY_HOME=/opt/poetry
 ENV PATH=$POETRY_HOME/bin:$PATH
 RUN curl -sSL https://install.python-poetry.org | python3 - \
@@ -79,7 +79,7 @@ USER root
 RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
   && curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null \
   && apt-get update \
-  && apt-get -y install postgresql-client-14 gettext \
+  && apt-get -y install postgresql-client-15 gettext \
   && rm -rf /var/lib/apt/lists/*
 
 # Switch back to unprivileged user
