@@ -24,21 +24,12 @@ A template project with:
 
 Clone this project locally.
 
-Replace all instances of `django_template` and `django-template` with your project's name in snake_case and kebab-case, respectively.
+Ensure that you have GNU or BSD make installed.
+
+Run the `rename` Makefile target to replace all instances of `django_template` and `django-template` with your project's name in snake_case and kebab-case, respectively.
 
 ```bash
-# Replace these variables with your project's name
-export PROJECT_NAME_CAMEL_CASE=my_project_name
-export PROJECT_NAME_KEBAB_CASE=my-project-name
-
-# Replace the top-level app name with `$PROJECT_NAME_CAMEL_CASE`
-mv django_template "$PROJECT_NAME_CAMEL_CASE"
-
-# Replace all instances of `django_template` with `$PROJECT_NAME_CAMEL_CASE`
-grep -rl django_template . | xargs perl -i -pe "s/django_template/$PROJECT_NAME_CAMEL_CASE/g"
-
-# Replace all instances of `django-template` with `$PROJECT_NAME_KEBAB_CASE`
-grep -rl django-template . | xargs perl -i -pe "s/django-template/$PROJECT_NAME_KEBAB_CASE/g"
+make rename PROJECT_NAME=my_project_name_with_underscores
 ```
 
 Remove the `.git` directory and replace with your project's git configuration.
