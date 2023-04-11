@@ -63,7 +63,7 @@ jobs:
         if: always()
 
       - name: Run bandit
-        run: poetry run bandit -r .
+        run: poetry run bandit -c pyproject.toml -r .
         if: always()
 
       - name: Run detect-secrets
