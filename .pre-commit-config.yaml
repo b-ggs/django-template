@@ -23,6 +23,9 @@ repos:
     rev: 1.7.5
     hooks:
       - id: bandit
+        args:
+          - -c
+          - pyproject.toml
 
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.4.0

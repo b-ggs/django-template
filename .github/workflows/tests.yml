@@ -51,6 +51,9 @@ jobs:
       - name: Install dependencies with Poetry
         run: poetry install
 
+      - name: Install dependencies with npm
+        run: npm ci
+
       - name: Run black
         run: poetry run black --check --diff .
         if: always()
@@ -60,7 +63,7 @@ jobs:
         if: always()
 
       - name: Run bandit
-        run: poetry run bandit -r .
+        run: poetry run bandit -c pyproject.toml -r .
         if: always()
 
       - name: Run detect-secrets
@@ -72,11 +75,13 @@ jobs:
         if: always()
 
       - name: Run pyright
-        run: poetry run npx pyright .
+        # This needs to be run inside the project's virtualenv to be able to use
+        # django-types
+        run: poetry run npm exec -- pyright .
         if: always()
 
       - name: Run prettier
-        run: poetry run npx prettier --check .
+        run: npm exec -- prettier --check .
         if: always()
 
       - name: Check for missing migrations
