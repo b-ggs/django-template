@@ -59,8 +59,7 @@ rename:
 
 	@echo ""
 	@echo "This Makefile target will:"
-	@echo "1.) Remove the existing \`.git\` directory"
-	@echo "2.) Will replace all instances of the following in files and folders:"
+	@echo "1.) Replace all instances of the following in files and folders:"
 	@echo "  - \`django_template\` with \`$(PROJECT_NAME)\`"
 	@echo "  - \`django-template\` with \`$(PROJECT_NAME_KEBAB)\`"
 	@echo ""
@@ -68,9 +67,6 @@ rename:
 	@echo ""
 
 	@sleep 10
-
-	@# Remove the existing .git directory
-	rm -rf .git
 
 	@# Rename the django_template directory
 	mv django_template $(PROJECT_NAME)
