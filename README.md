@@ -22,17 +22,17 @@ A template project with:
 
 ## Making it your own
 
-Clone this project locally.
+Click on the **"Use this template"** button on GitHub and create a new repository.
 
-Ensure that you have GNU or BSD Make installed.
+Clone your new repository.
 
-Run the `rename` Makefile target to replace all instances of `django_template` and `django-template` with your project's name in snake_case and kebab-case, respectively.
+Ensure that you have GNU or BSD Make installed. 
+
+Run the `rename` Makefile target to replace all in stances of `django_template` and `django-template` with your project's name in snake_case and kebab-case, respectively.
 
 ```bash
 make rename PROJECT_NAME=my_project_name_with_underscores
 ```
-
-Remove the `.git` directory and replace with your project's git configuration.
 
 ## Running the project locally
 
