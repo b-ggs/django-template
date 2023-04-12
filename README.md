@@ -26,7 +26,7 @@ Click on the **"Use this template"** button on GitHub and create a new repositor
 
 Clone your new repository.
 
-Ensure that you have GNU or BSD Make installed. 
+Ensure that you have GNU or BSD Make installed.
 
 Run the `rename` Makefile target to replace all in stances of `django_template` and `django-template` with your project's name in snake_case and kebab-case, respectively.
 
