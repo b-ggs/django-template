@@ -77,5 +77,9 @@ rename:
 	@# Replace all instances of django-template with PROJECT_NAME_KEBAB
 	grep -rl django-template . | xargs perl -i -pe "s/django-template/$(PROJECT_NAME_KEBAB)/g"
 
+	@# Reset git index
+	rm .git/index
+	git reset
+
 	@echo ""
 	@echo "Done!"
