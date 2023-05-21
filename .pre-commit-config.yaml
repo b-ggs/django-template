@@ -13,7 +13,7 @@ repos:
       - id: black
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.265
+    rev: v0.0.269
     hooks:
       - id: ruff
         args:
@@ -51,7 +51,7 @@ repos:
           - python
         pass_filenames: false
         additional_dependencies:
-          - pyright@1.1.306
+          - pyright@1.1.309
 
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.7.1
