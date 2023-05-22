@@ -34,7 +34,7 @@ jobs:
       - name: Install Poetry
         run: curl -sSL https://install.python-poetry.org | python3 -
         env:
-          POETRY_VERSION: "1.4.2"
+          POETRY_VERSION: "1.5.0"
 
       - name: Set up Python
         uses: actions/setup-python@v4
