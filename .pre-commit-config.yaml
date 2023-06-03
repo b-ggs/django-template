@@ -26,6 +26,8 @@ repos:
         args:
           - -c
           - pyproject.toml
+        additional_dependencies:
+          - ".[toml]"
 
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.4.0
