@@ -66,13 +66,11 @@ jobs:
         if: always()
 
       - name: Run pyright
-        # This needs to be run inside the project's virtualenv to be able to use
-        # django-types
-        run: poetry run npm exec -- pyright .
+        run: poetry run pyright .
         if: always()
 
       - name: Run prettier
-        run: npm exec -- prettier --check .
+        run: npx prettier@2.8.8 --check .
         if: always()
 
       - name: Check for missing migrations
