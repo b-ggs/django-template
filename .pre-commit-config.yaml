@@ -57,4 +57,5 @@ repos:
     hooks:
       - id: prettier
         additional_dependencies:
+          # Make sure prettier version is in sync with CI
           - prettier@2.8.8
