@@ -602,6 +602,24 @@ files = [
 plugins = ["importlib-metadata"]
 
 [[package]]
+name = "pyright"
+version = "1.1.313"
+description = "Command line wrapper for pyright"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "pyright-1.1.313-py3-none-any.whl", hash = "sha256:1aeed72d5563e97461cb9d17847bfa918f7ec0cf79912bb3d2432fbe014daa23"},
+    {file = "pyright-1.1.313.tar.gz", hash = "sha256:95fa963337e2cfd4900601197d0f866d8c51732dea6c0bb12f962f92a79c77e3"},
+]
+
+[package.dependencies]
+nodeenv = ">=1.6.0"
+
+[package.extras]
+all = ["twine (>=3.4.1)"]
+dev = ["twine (>=3.4.1)"]
+
+[[package]]
 name = "python-dateutil"
 version = "2.8.2"
 description = "Extensions to the standard Python datetime module"
@@ -936,4 +954,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "79d160f30079ca04420b00c237e6491caa8b5d4f1e88dcb40dd0a53a50594fc6"
+content-hash = "6bd0b5b89dabd39fd91c5a9660e3089f1f1166f38e72e87b290878241a1cdfbd"
