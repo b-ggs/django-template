@@ -13,4 +13,8 @@ class IndexView(TemplateView):
             "python_version": ".".join(platform.python_version_tuple()),
             "django_version": get_version(),
         }
+
+        test: int = "foo"
+        return test
+
         return context
