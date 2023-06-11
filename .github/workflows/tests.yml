@@ -42,17 +42,8 @@ jobs:
           python-version: "3.11"
           cache: poetry
 
-      - name: Set up Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: npm
-
       - name: Install dependencies with Poetry
         run: poetry install
-
-      - name: Install dependencies with npm
-        run: npm ci
 
       - name: Run black
         run: poetry run black --check --diff .
