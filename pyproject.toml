@@ -20,13 +20,13 @@ factory-boy = "^3.2.1"
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"
 ruff = "^0.0.272"
-pre-commit = "^3.3.2"
+pre-commit = "^3.3.3"
 bandit = "^1.7.5"
 detect-secrets = "^1.4.0"
 djhtml = "^3.0.6"
 dslr = "^0.4.0"
 django-types = "^0.17.0"
-pyright = "^1.1.313"
+pyright = "^1.1.314"
 
 [build-system]
 requires = ["poetry-core"]

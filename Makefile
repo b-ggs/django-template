@@ -41,8 +41,6 @@ test-keepdb:
 
 bump-deps:
 	docker compose run --rm --no-deps web poetry up --latest
-	npx npm-check-updates -u
-	npm install
 
 rename:
 	@# Check if PROJECT_NAME is defined
