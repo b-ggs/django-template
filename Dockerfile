@@ -3,7 +3,7 @@
 ####################
 
 # Make sure Python version is in sync with CI configs
-FROM python:3.11-bullseye AS base
+FROM python:3.11-bookworm AS base
 
 # Set up unprivileged user
 RUN useradd --create-home django_template
@@ -76,7 +76,7 @@ USER root
 
 # Install Postgres client for dslr import and export
 # Install gettext for i18n
-RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
+RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bookworm-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
   && curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null \
   && apt-get update \
   && apt-get -y install postgresql-client-15 gettext \
