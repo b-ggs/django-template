@@ -25,7 +25,7 @@ ENV POETRY_VERSION=1.5.1
 ENV POETRY_HOME=/opt/poetry
 ENV PATH=$POETRY_HOME/bin:$PATH
 RUN curl -sSL https://install.python-poetry.org | python3 - \
-    && chown -R django_template:django_template "$POETRY_HOME"
+  && chown -R django_template:django_template "$POETRY_HOME"
 
 # Switch to unprivileged user
 USER django_template
@@ -37,13 +37,12 @@ WORKDIR $APP_DIR
 # - PYTHONUNBUFFERED: Force Python stdout and stderr streams to be unbuffered
 # - PORT: Set port that is used by Gunicorn. This should match the "EXPOSE"
 #   command
-ENV PYTHONUNBUFFERED=1 \
-    PORT=8000
+ENV PYTHONUNBUFFERED=1
+ENV PORT=8000
 
 # Install main project dependencies
-RUN python3 -m venv $VIRTUAL_ENV
 COPY --chown=django_template pyproject.toml poetry.lock ./
-RUN pip install --upgrade pip \
+RUN python3 -m venv $VIRTUAL_ENV \
   && poetry install --no-root --only main
 
 # Port used by this container to serve HTTP
