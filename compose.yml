@@ -4,9 +4,6 @@ services:
     command: tail -f /dev/null
     ports:
       - "8000:8000"
-    environment:
-      DATABASE_URL: postgres://postgres_user:postgres_password@postgres:5432/postgres_db
-      DJANGO_SETTINGS_MODULE: django_template.settings.dev
     env_file: .env
     volumes:
       - .:/app
