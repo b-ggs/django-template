@@ -19,7 +19,7 @@ factory-boy = "^3.2.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.7.0"
-ruff = "^0.0.277"
+ruff = "^0.0.278"
 pre-commit = "^3.3.3"
 bandit = "^1.7.5"
 detect-secrets = "^1.4.0"
