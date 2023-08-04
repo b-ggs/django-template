@@ -41,6 +41,7 @@ test-keepdb:
 
 bump-deps:
 	docker compose run --rm --no-deps web poetry up --latest
+	docker compose run --rm --no-deps web pre-commit autoupdate
 
 rename:
 	@# Check if PROJECT_NAME is defined

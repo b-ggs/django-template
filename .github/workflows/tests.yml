@@ -70,7 +70,7 @@ jobs:
         if: always()
 
       - name: Run prettier
-        run: npx prettier@2.8.8 --check .
+        run: npx prettier@3.0.1 --check .
         if: always()
 
       - name: Check for missing migrations
