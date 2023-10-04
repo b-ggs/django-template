@@ -24,8 +24,8 @@ pre-commit = "^3.4.0"
 bandit = "^1.7.5"
 detect-secrets = "^1.4.0"
 djhtml = "^3.0.6"
-dslr = {version="^0.4.0", extras=["psycopg2-binary"]}
-django-types = "^0.17.0"
+dslr = {version="~0.4.0", extras=["psycopg2-binary"]}
+django-types = "~0.18.0"
 pyright = "^1.1.329"
 
 [build-system]
