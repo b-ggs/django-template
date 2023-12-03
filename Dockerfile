@@ -99,6 +99,3 @@ RUN echo "alias djtestkeepdb='./manage.py test --settings=django_template.settin
 # Copy the project files
 # Ensure that this is one of the last commands for better layer caching
 COPY --chown=django_template:django_template . .
-
-# Collect static files
-RUN SECRET_KEY=dummy python3 manage.py collectstatic --noinput --clear
