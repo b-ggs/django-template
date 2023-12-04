@@ -13,8 +13,8 @@ django-extensions = "^3.2.3"
 gunicorn = "^21.2.0"
 dj-database-url = "^2.1.0"
 whitenoise = "^6.6.0"
-psycopg = "^3.1.13"
-sentry-sdk = "^1.37.1"
+psycopg = "^3.1.14"
+sentry-sdk = "^1.38.0"
 factory-boy = "^3.3.0"
 
 [tool.poetry.group.dev.dependencies]
@@ -26,7 +26,7 @@ detect-secrets = "^1.4.0"
 djhtml = "^3.0.6"
 dslr = {version="~0.4.0", extras=["psycopg2-binary"]}
 django-types = "~0.19.1"
-pyright = "^1.1.337"
+pyright = "^1.1.338"
 
 [build-system]
 requires = ["poetry-core"]
