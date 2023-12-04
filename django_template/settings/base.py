@@ -164,7 +164,11 @@ STATIC_URL = "/static/"
 # https://devcenter.heroku.com/articles/django-assets
 # https://warehouse.python.org/project/whitenoise/
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
