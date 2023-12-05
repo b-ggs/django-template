@@ -5,6 +5,10 @@
 {% block content %}
     <h1>{% trans "Welcome to your new site!" %}</h1>
 
-    <p>Django {{ django_version }}</p>
-    <p>Python {{ python_version }}</p>
+    <p>You are running:</p>
+
+    <ul>
+        <li>Django {{ django_version }}</li>
+        <li>Python {{ python_version }}</li>
+    </ul>
 {% endblock content %}

@@ -157,7 +157,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_DIRS = [
+    # Global static files can be stored in django_template/staticfiles and
+    # are accessible via the namespace `staticfiles/filename`, e.g.
+    # {% static 'staticfiles/styles.css' %}
+    ("staticfiles", os.path.join(BASE_DIR, "staticfiles_src")),
+]
+
+# Collected static files will be stored in django_template/staticfiles_collected
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles_collected")
+
 STATIC_URL = "/static/"
 
 # Simplified static file serving
@@ -236,8 +245,3 @@ if sentry_dsn := os.getenv("SENTRY_DSN"):
         sentry_init_args["auto_session_tracking"] = False
 
     sentry_sdk.init(**sentry_init_args)
-
-    # Enables URL to test Sentry integration
-    SENTRY_TEST_URL_ENABLED = (
-        os.environ.get("SENTRY_TEST_URL_ENABLED", "false").lower() == "true"
-    )
