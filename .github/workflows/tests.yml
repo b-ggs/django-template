@@ -45,6 +45,22 @@ jobs:
       - name: Install dependencies with Poetry
         run: poetry install
 
+      # pyright-python can be a little flaky when it's instructed to check
+      # files directly after it's first installed on GitHub Actions runners.
+      #
+      # Issues on GitHub seem to assert that it may have to do with
+      # pyright-python trying to perform type-checking at the same time as
+      # setting up node and npm for the first time.
+      #
+      # This command will set up node, npm, and pyright, so when it's run by
+      # pre-commit, pyright will have already been fully set up.
+      #
+      # https://github.com/RobertCraigie/pyright-python/issues/200
+      # https://github.com/RobertCraigie/pyright-python/issues/213
+      # https://github.com/RobertCraigie/pyright-python/issues/231
+      - name: Initialize pyright
+        run: poetry run pyright --version
+
       - name: Run pre-commit hooks
         uses: pre-commit/action@v3.0.0
 
