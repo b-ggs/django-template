@@ -7,3 +7,5 @@ urlpatterns = [
     path("", include(home_urls)),
     path("django-admin/", admin.site.urls),
 ]
+
+foo: int =  "foo"
