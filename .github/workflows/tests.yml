@@ -45,29 +45,8 @@ jobs:
       - name: Install dependencies with Poetry
         run: poetry install
 
-      - name: Run black
-        run: poetry run black --check --diff .
-        if: always()
-
-      - name: Run ruff
-        run: poetry run ruff --diff .
-        if: always()
-
-      - name: Run bandit
-        run: poetry run bandit -c pyproject.toml -r .
-        if: always()
-
-      - name: Run detect-secrets
-        run: poetry run detect-secrets scan --baseline .secrets.baseline
-        if: always()
-
-      - name: Run djhtml
-        run: poetry run djhtml --check .
-        if: always()
-
-      - name: Run pyright
-        run: poetry run pyright .
-        if: always()
+      - name: Run pre-commit hooks
+        uses: pre-commit/action@v3.0.0
 
       - name: Check for missing migrations
         run: poetry run python manage.py makemigrations --check --noinput
