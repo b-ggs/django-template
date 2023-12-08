@@ -1,6 +1,5 @@
 __pycache__
 .env
-.python-version
 **.dump
 django_template/staticfiles_collected
 
