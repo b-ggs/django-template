@@ -639,13 +639,13 @@ windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
 name = "pyright"
-version = "1.1.341"
+version = "1.1.346"
 description = "Command line wrapper for pyright"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pyright-1.1.341-py3-none-any.whl", hash = "sha256:f5800daf9d5780ebf6c6e04064a6d20da99c0ef16efd77526f83cc8d8551ff9f"},
-    {file = "pyright-1.1.341.tar.gz", hash = "sha256:b891721f3abd10635cc4fd3076bcff5b7676567dc3a629997ed59a0d30034a87"},
+    {file = "pyright-1.1.346-py3-none-any.whl", hash = "sha256:70dd864a1dab488fdf7d26f84ccf7781f279647f5a808026271b3b82c9c8e3a3"},
+    {file = "pyright-1.1.346.tar.gz", hash = "sha256:0b75f5d18736282900406aa0dccf23cdf26776e5363edf57ea380a1faf6986b3"},
 ]
 
 [package.dependencies]
@@ -1013,4 +1013,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "13b3d240495ccd8a23681910c7b4d415ad430a0fc26c3cef3ec4a968ba603bc3"
+content-hash = "c034498d09a4d1259d7143f244133a65b1ad014fc388b1a0059dec0be423595d"
