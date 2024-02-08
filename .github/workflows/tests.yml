@@ -62,7 +62,7 @@ jobs:
         run: poetry run pyright --version
 
       - name: Run pre-commit hooks
-        uses: pre-commit/action@v3.0.0
+        uses: pre-commit/action@v3.0.1
 
       - name: Check for missing migrations
         run: poetry run python manage.py makemigrations --check --noinput
