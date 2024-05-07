@@ -200,13 +200,13 @@ test = ["flake8 (==3.7.8)", "hypothesis (==3.55.3)"]
 
 [[package]]
 name = "detect-secrets"
-version = "1.4.0"
+version = "1.5.0"
 description = "Tool for detecting secrets in the codebase"
 optional = false
 python-versions = "*"
 files = [
-    {file = "detect_secrets-1.4.0-py3-none-any.whl", hash = "sha256:d08ecabeee8b68c0acb0e8a354fb98d822a653f6ed05e520cead4c6fc1fc02cd"},
-    {file = "detect_secrets-1.4.0.tar.gz", hash = "sha256:d56787e339758cef48c9ccd6692f7a094b9963c979c9813580b0169e41132833"},
+    {file = "detect_secrets-1.5.0-py3-none-any.whl", hash = "sha256:e24e7b9b5a35048c313e983f76c4bd09dad89f045ff059e354f9943bf45aa060"},
+    {file = "detect_secrets-1.5.0.tar.gz", hash = "sha256:6bb46dcc553c10df51475641bb30fd69d25645cc12339e46c824c1e0c388898a"},
 ]
 
 [package.dependencies]
@@ -977,4 +977,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "fb864de1aff1493c48a3c4bd3b12224334fa00b848772d247920e05b61604aa9"
+content-hash = "ebe64552a5aab096d20a8ce2b61ddd86c4bab7a2c97d66068128e326c217fb7a"
