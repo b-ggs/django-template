@@ -15,7 +15,9 @@ services:
         condition: service_healthy
 
   postgres:
-    image: postgres:15
+    # Make sure Postgres version is in sync with CI configs and is available on Heroku
+    # https://devcenter.heroku.com/articles/heroku-postgres-version-support
+    image: postgres:16
     ports:
       - "5432:5432"
     environment:
