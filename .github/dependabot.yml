@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: pip
     directory: /
     schedule:
-      interval: daily
+      interval: weekly
     ignore:
       - dependency-name: "Django"
         versions:
@@ -11,4 +11,4 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: daily
+      interval: weekly

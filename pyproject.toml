@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "django_template"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.12"
 Django = "^4.2.13"
 django-extensions = "^3.2.3"
 gunicorn = "^22.0.0"
