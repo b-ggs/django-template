@@ -43,7 +43,7 @@ ENV PORT=8000
 # Install main project dependencies
 COPY --chown=django_template pyproject.toml poetry.lock ./
 RUN python3 -m venv $VIRTUAL_ENV \
-  && poetry install --no-root --only main
+  && poetry install --only main
 
 # Port used by this container to serve HTTP
 EXPOSE 8000
@@ -85,7 +85,7 @@ RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bookworm-pgdg main"
 USER django_template
 
 # Install all project dependencies
-RUN poetry install --no-root
+RUN poetry install
 
 # Install poetry-plugin-up for bumping Poetry dependencies
 RUN poetry self add poetry-plugin-up
