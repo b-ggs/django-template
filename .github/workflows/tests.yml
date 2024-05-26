@@ -73,3 +73,9 @@ jobs:
 
       - name: Run tests
         run: poetry run python3 manage.py test --settings=django_template.settings.test -v=2
+
+      - name: Build dev Docker image
+        run: docker build -t django-template:dev --target dev .
+
+      - name: Build production Docker image
+        run: docker build -t django-template:production --target production .
