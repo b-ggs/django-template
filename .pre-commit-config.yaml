@@ -38,6 +38,7 @@ repos:
     rev: 3.0.6
     hooks:
       - id: djhtml
+        entry: djhtml --tabwidth 2
 
   - repo: local
     hooks:
