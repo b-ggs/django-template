@@ -8,13 +8,13 @@ packages = [{include = "django_template"}]
 
 [tool.poetry.dependencies]
 python = "^3.12"
-Django = "^4.2.13"
+Django = "^4.2.14"
 django-extensions = "^3.2.3"
 gunicorn = "^22.0.0"
 dj-database-url = "^2.2.0"
 whitenoise = "^6.7.0"
 psycopg = "^3.2.1"
-sentry-sdk = "^2.7.1"
+sentry-sdk = "^2.9.0"
 factory-boy = "^3.3.0"
 
 [tool.poetry.group.dev.dependencies]
@@ -25,7 +25,7 @@ detect-secrets = "^1.5.0"
 djhtml = "^3.0.6"
 dslr = {version="*", extras=["psycopg2-binary"]}
 django-types = "*"
-pyright = "^1.1.370"
+pyright = "^1.1.371"
 
 [build-system]
 requires = ["poetry-core"]
