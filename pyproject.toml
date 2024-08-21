@@ -10,7 +10,7 @@ packages = [{include = "django_template"}]
 python = "^3.12"
 Django = "^4.2.14"
 django-extensions = "^3.2.3"
-gunicorn = "^22.0.0"
+gunicorn = "^23.0.0"
 dj-database-url = "^2.2.0"
 whitenoise = "^6.7.0"
 psycopg = "^3.2.1"
