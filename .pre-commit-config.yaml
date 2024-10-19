@@ -8,7 +8,7 @@ repos:
       - id: check-added-large-files
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.6.9
+    rev: v0.7.0
     hooks:
       - id: ruff
         args:
@@ -35,7 +35,7 @@ repos:
         exclude: package.lock.json
 
   - repo: https://github.com/rtts/djhtml
-    rev: 3.0.6
+    rev: 3.0.7
     hooks:
       - id: djhtml
         entry: djhtml --tabwidth 2
