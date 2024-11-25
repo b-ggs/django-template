@@ -14,7 +14,7 @@ gunicorn = "^23.0.0"
 dj-database-url = "^2.3.0"
 whitenoise = "^6.8.2"
 psycopg = "^3.2.3"
-sentry-sdk = "^2.18.0"
+sentry-sdk = "^2.19.0"
 factory-boy = "^3.3.1"
 
 [tool.poetry.group.dev.dependencies]
