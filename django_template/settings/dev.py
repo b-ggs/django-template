@@ -10,3 +10,14 @@ SECRET_KEY = "django-insecure-nvg5arlsvczsdk5pzu-=f2qpst%ze8#jyuhfmldp7--j#ao5)j
 
 # SECURITY WARNING: define the correct hosts in production!
 ALLOWED_HOSTS = ["*"]
+
+
+# django-extensions
+# https://django-extensions.readthedocs.io/en/stable/
+
+# Configure IPython to automatically reload modules
+# https://ipython.org/ipython-doc/3/config/extensions/autoreload.html
+IPYTHON_ARGUMENTS = [
+    "-c=%load_ext autoreload\n%autoreload 2",
+    "-i",
+]
