@@ -27,9 +27,9 @@ sh:
 	@echo "You can run your development server with \`djrun\`"
 	@echo ""
 	@echo "Several bash aliases exist in this container such as:"
-	@echo "  - \`dj\` - \`./manage.py\`"
-	@echo "  - \`djtest\` - \`./manage.py test --settings=django_template.settings.test -v=2\`"
-	@echo "  - \`djtestkeepdb\` - \`./manage.py test --settings=django_template.settings.test -v=2 --keepdb\`"
+	@echo "  - \`dj\` - \`python3 manage.py\`"
+	@echo "  - \`djtest\` - \`python3 manage.py test --settings=django_template.settings.test -v=2\`"
+	@echo "  - \`djtestkeepdb\` - \`python3 manage.py test --settings=django_template.settings.test -v=2 --keepdb\`"
 	@echo ""
 	docker compose exec web bash
 

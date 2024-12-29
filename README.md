@@ -62,10 +62,10 @@ make sh
 
 Several bash aliases exist in the Django Docker container such as:
 
-- `dj`: `./manage.py`
-- `djrun`: `./manage.py runserver 0:8000`
-- `djtest`: `./manage.py test --settings=django_template.settings.test -v=2`
-- `djtestkeepdb`: `./manage.py test --settings=django_template.settings.test -v=2 --keepdb`
+- `dj`: `python3 manage.py`
+- `djrun`: `python3 manage.py runserver 0:8000`
+- `djtest`: `python3 manage.py test --settings=django_template.settings.test -v=2`
+- `djtestkeepdb`: `python3 manage.py test --settings=django_template.settings.test -v=2 --keepdb`
 
 Run all outstanding migrations.
 

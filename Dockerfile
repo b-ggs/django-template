@@ -100,10 +100,10 @@ RUN --mount=type=cache,target=/home/django_template/.cache/pypoetry,uid=1000 \
   poetry self add poetry-plugin-up
 
 # Add bash aliases
-RUN echo "alias dj='./manage.py'" >> $HOME/.bash_aliases
-RUN echo "alias djrun='./manage.py runserver 0:8000'" >> $HOME/.bash_aliases
-RUN echo "alias djtest='./manage.py test --settings=django_template.settings.test -v=2'" >> $HOME/.bash_aliases
-RUN echo "alias djtestkeepdb='./manage.py test --settings=django_template.settings.test -v=2 --keepdb'" >> $HOME/.bash_aliases
+RUN echo "alias dj='python3 manage.py'" >> $HOME/.bash_aliases
+RUN echo "alias djrun='python3 manage.py runserver 0:8000'" >> $HOME/.bash_aliases
+RUN echo "alias djtest='python3 manage.py test --settings=django_template.settings.test -v=2'" >> $HOME/.bash_aliases
+RUN echo "alias djtestkeepdb='python3 manage.py test --settings=django_template.settings.test -v=2 --keepdb'" >> $HOME/.bash_aliases
 
 # Copy the project files
 # Ensure that this is one of the last commands for better layer caching

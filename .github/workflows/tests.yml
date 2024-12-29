@@ -65,7 +65,7 @@ jobs:
         uses: pre-commit/action@v3.0.1
 
       - name: Check for missing migrations
-        run: poetry run python manage.py makemigrations --check --noinput
+        run: poetry run python3 manage.py makemigrations --check --noinput
         if: always()
 
       - name: Collect staticfiles
