@@ -11,7 +11,7 @@ RUN useradd --create-home django_template
 # Set up project directory
 ENV APP_DIR=/app
 RUN mkdir -p "$APP_DIR" \
-  && chown -R django_template "$APP_DIR"
+  && chown -R django_template:django_template "$APP_DIR"
 
 # Set up virtualenv
 ENV VIRTUAL_ENV=/venv
@@ -41,8 +41,9 @@ ENV PYTHONUNBUFFERED=1
 ENV PORT=8000
 
 # Install main project dependencies
-COPY --chown=django_template pyproject.toml poetry.lock ./
-RUN python3 -m venv $VIRTUAL_ENV \
+COPY --chown=django_template:django_template pyproject.toml poetry.lock ./
+RUN --mount=type=cache,target=/home/django_template/.cache/pypoetry,uid=1000 \
+  python3 -m venv $VIRTUAL_ENV \
   && poetry install --only main
 
 # Port used by this container to serve HTTP
@@ -73,22 +74,30 @@ FROM base AS dev
 # Temporarily switch to install packages from apt
 USER root
 
+# Configure apt to keep downloaded packages for BuildKit caching
+# https://docs.docker.com/reference/dockerfile/#example-cache-apt-packages
+RUN rm -f /etc/apt/apt.conf.d/docker-clean \
+  && echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
+
 # Install Postgres client for dslr import and export
 # Install gettext for i18n
-RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bookworm-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+  --mount=type=cache,target=/var/lib/apt,sharing=locked \
+  sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bookworm-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
   && curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null \
   && apt-get update \
-  && apt-get -y install postgresql-client-16 gettext \
-  && rm -rf /var/lib/apt/lists/*
+  && apt-get -y install postgresql-client-16 gettext
 
 # Switch back to unprivileged user
 USER django_template
 
 # Install all project dependencies
-RUN poetry install
+RUN --mount=type=cache,target=/home/django_template/.cache/pypoetry,uid=1000 \
+  poetry install
 
 # Install poetry-plugin-up for bumping Poetry dependencies
-RUN poetry self add poetry-plugin-up
+RUN --mount=type=cache,target=/home/django_template/.cache/pypoetry,uid=1000 \
+  poetry self add poetry-plugin-up
 
 # Add bash aliases
 RUN echo "alias dj='./manage.py'" >> $HOME/.bash_aliases
