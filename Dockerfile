@@ -97,7 +97,7 @@ RUN --mount=type=cache,target=/home/django_template/.cache/pypoetry,uid=1000 \
 
 # Add bash aliases
 RUN echo "alias dj='python3 manage.py'" >> $HOME/.bash_aliases
-RUN echo "alias djrun='python3 manage.py runserver 0:8000'" >> $HOME/.bash_aliases
+RUN echo "alias djrun='python3 manage.py runserver_plus 0:8000'" >> $HOME/.bash_aliases
 RUN echo "alias djtest='python3 manage.py test --settings=django_template.settings.test -v=2'" >> $HOME/.bash_aliases
 RUN echo "alias djtestkeepdb='python3 manage.py test --settings=django_template.settings.test -v=2 --keepdb'" >> $HOME/.bash_aliases
 

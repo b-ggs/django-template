@@ -12,6 +12,18 @@ SECRET_KEY = "django-insecure-nvg5arlsvczsdk5pzu-=f2qpst%ze8#jyuhfmldp7--j#ao5)j
 ALLOWED_HOSTS = ["*"]
 
 
+# django-browser-reload
+# https://github.com/adamchainz/django-browser-reload
+INSTALLED_APPS.append("django_browser_reload")  # noqa: F405
+MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")  # noqa: F405
+
+
+# django-silk
+# https://github.com/jazzband/django-silk
+INSTALLED_APPS.append("silk")  # noqa: F405
+MIDDLEWARE.insert(0, "silk.middleware.SilkyMiddleware")  # noqa: F405
+
+
 # django-extensions
 # https://django-extensions.readthedocs.io/en/stable/
 
