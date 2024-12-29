@@ -42,12 +42,6 @@ Ensure that you have the following installed:
 - Docker
 - Docker Compose
 
-Copy the included env file example.
-
-```bash
-cp .env.example .env
-```
-
 Build your development environment.
 
 ```bash
