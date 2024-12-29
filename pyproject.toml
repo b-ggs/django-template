@@ -23,7 +23,7 @@ pre-commit = "^4.0.1"
 bandit = "^1.8.0"
 detect-secrets = "^1.5.0"
 djhtml = "^3.0.7"
-dslr = {version="*", extras=["psycopg2-binary"]}
+dslr = { version = "*", extras = ["psycopg2-binary"] }
 django-types = "*"
 pyright = "^1.1.391"
 watchdog = "^6.0.0"
@@ -36,7 +36,18 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.ruff.lint]
-select = ["E", "F", "W", "C90", "I", "SIM", "DJ", "T10"]
+select = [
+  "E",   # https://docs.astral.sh/ruff/rules/#pycodestyle-e-w
+  "F",   # https://docs.astral.sh/ruff/rules/#pyflakes-f
+  "W",   # https://docs.astral.sh/ruff/rules/#pycodestyle-e-w
+  "I",   # https://docs.astral.sh/ruff/rules/#isort-i
+  "SIM", # https://docs.astral.sh/ruff/rules/#flake8-simplify-sim
+  "DJ",  # https://docs.astral.sh/ruff/rules/#flake8-django-dj
+  "T10", # https://docs.astral.sh/ruff/rules/#flake8-debugger-t10
+]
+ignore = [
+  "SIM108", # don't recommend ternary operator
+]
 exclude = ["django_template/*/migrations/*.py"]
 
 [tool.ruff.format]
