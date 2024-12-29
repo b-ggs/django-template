@@ -249,9 +249,6 @@ if sentry_dsn := os.getenv("SENTRY_DSN"):
     }
 
     # Auto session tracking is not supported by GlitchTip
-    if "sentry.io" in sentry_dsn:
-        sentry_init_args["auto_session_tracking"] = True
-    else:
-        sentry_init_args["auto_session_tracking"] = False
+    sentry_init_args["auto_session_tracking"] = "sentry.io" in sentry_dsn
 
     sentry_sdk.init(**sentry_init_args)
