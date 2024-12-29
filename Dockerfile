@@ -95,10 +95,6 @@ USER django_template
 RUN --mount=type=cache,target=/home/django_template/.cache/pypoetry,uid=1000 \
   poetry install
 
-# Install poetry-plugin-up for bumping Poetry dependencies
-RUN --mount=type=cache,target=/home/django_template/.cache/pypoetry,uid=1000 \
-  poetry self add poetry-plugin-up
-
 # Add bash aliases
 RUN echo "alias dj='python3 manage.py'" >> $HOME/.bash_aliases
 RUN echo "alias djrun='python3 manage.py runserver 0:8000'" >> $HOME/.bash_aliases
