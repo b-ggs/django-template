@@ -26,7 +26,7 @@ ruff = "*"
 pre-commit = "^4.0.1"
 bandit = "^1.8.0"
 detect-secrets = "^1.5.0"
-djhtml = "^3.0.7"
+djlint = "^1.36.4"
 dslr = { version = "*", extras = ["psycopg2-binary"] }
 django-types = "*"
 pyright = "^1.1.391"
@@ -55,3 +55,7 @@ exclude = ["django_template/*/migrations/*.py"]
 
 [tool.bandit]
 exclude_dirs = ["tests"]
+
+[tool.djlint]
+# https://www.djlint.com/docs/linter/#rules
+ignore = "H029,H030,H031"

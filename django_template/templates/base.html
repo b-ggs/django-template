@@ -1,16 +1,16 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}django_template{% endblock title %}</title>
-
-    <link rel="stylesheet" href="{% static 'staticfiles/styles.css' %}">
-
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            {% block title %}
+                django_template
+            {% endblock title %}
+        </title>
+        <link rel="stylesheet" href="{% static 'staticfiles/styles.css' %}">
         {% comment %}
         <meta name="title" content="django_template" />
         <meta name="description" content="" />
@@ -27,10 +27,9 @@
         <meta property="twitter:description" content="" />
         <meta property="twitter:image" content="" />
         {% endcomment %}
-  </head>
-
-  <body>
-    {% block content %}{% endblock content %}
-  </body>
-
+    </head>
+    <body>
+        {% block content %}
+        {% endblock content %}
+    </body>
 </html>

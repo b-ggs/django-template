@@ -1,14 +1,10 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 {% load i18n %}
-
 {% block content %}
-  <h1>{% trans "Welcome to your new site!" %}</h1>
-
-  <p>You are running:</p>
-
-  <ul>
-    <li>Django {{ django_version }}</li>
-    <li>Python {{ python_version }}</li>
-  </ul>
+    <h1>{% trans "Welcome to your new site!" %}</h1>
+    <p>You are running:</p>
+    <ul>
+        <li>Django {{ django_version }}</li>
+        <li>Python {{ python_version }}</li>
+    </ul>
 {% endblock content %}
