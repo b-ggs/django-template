@@ -71,7 +71,7 @@ USER root
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
   --mount=type=cache,target=/var/lib/apt,sharing=locked \
   apt-get update \
-  && apt-get -y install libpq-dev
+  && apt-get install -y libpq-dev
 
 # Switch back to unprivileged user
 USER django_template
@@ -96,16 +96,17 @@ USER root
 ADD https://www.postgresql.org/media/keys/ACCC4CF8.asc /tmp/postgresql-pgp-public-key.asc
 
 # Install gnupg for installing Postgres client
+# Install git for pre-commit
 # Install Postgres client for dslr import and export
 # Install gettext for i18n
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
   --mount=type=cache,target=/var/lib/apt,sharing=locked \
   apt-get update \
-  && apt-get -y install gnupg \
+  && apt-get install -y gnupg \
   && sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bookworm-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
   && cat /tmp/postgresql-pgp-public-key.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null \
   && apt-get update \
-  && apt-get -y install postgresql-client-16 gettext
+  && apt-get install -y git postgresql-client-16 gettext
 
 # Switch back to unprivileged user
 USER django_template

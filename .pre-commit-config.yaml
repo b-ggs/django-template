@@ -8,7 +8,7 @@ repos:
       - id: check-added-large-files
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.8.4
+    rev: v0.8.6
     hooks:
       - id: ruff
         args:
@@ -35,7 +35,7 @@ repos:
         exclude: package.lock.json
 
   - repo: https://github.com/djlint/djLint
-    rev: v1.36.3
+    rev: v1.36.4
     hooks:
       - id: djlint-reformat-django
       - id: djlint-django
