@@ -3,7 +3,12 @@
 ####################
 
 # Make sure Python version is in sync with CI configs
-FROM python:3.12-bookworm AS base
+FROM python:3.12-slim-bookworm AS base
+
+# Configure apt to keep downloaded packages for BuildKit caching
+# https://docs.docker.com/reference/dockerfile/#example-cache-apt-packages
+RUN rm -f /etc/apt/apt.conf.d/docker-clean \
+  && echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
 
 # Set up unprivileged user
 RUN useradd --create-home django_template
@@ -24,7 +29,8 @@ RUN mkdir -p "$VIRTUAL_ENV" \
 ENV POETRY_VERSION=1.8.5
 ENV POETRY_HOME=/opt/poetry
 ENV PATH=$POETRY_HOME/bin:$PATH
-RUN curl -sSL https://install.python-poetry.org | python3 - \
+ADD https://install.python-poetry.org /tmp/poetry-install.py
+RUN python3 /tmp/poetry-install.py \
   && chown -R django_template:django_template "$POETRY_HOME"
 
 # Switch to unprivileged user
@@ -58,6 +64,18 @@ CMD ["gunicorn", "django_template.wsgi:application"]
 
 FROM base AS production
 
+# Temporarily switch to install packages from apt
+USER root
+
+# Install libpq-dev for psycopg
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+  --mount=type=cache,target=/var/lib/apt,sharing=locked \
+  apt-get update \
+  && apt-get -y install libpq-dev
+
+# Switch back to unprivileged user
+USER django_template
+
 # Copy the project files
 # Ensure that this is one of the last commands for better layer caching
 COPY --chown=django_template:django_template . .
@@ -74,17 +92,18 @@ FROM base AS dev
 # Temporarily switch to install packages from apt
 USER root
 
-# Configure apt to keep downloaded packages for BuildKit caching
-# https://docs.docker.com/reference/dockerfile/#example-cache-apt-packages
-RUN rm -f /etc/apt/apt.conf.d/docker-clean \
-  && echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
+# Download Postgres PGP public key
+ADD https://www.postgresql.org/media/keys/ACCC4CF8.asc /tmp/postgresql-pgp-public-key.asc
 
+# Install gnupg for installing Postgres client
 # Install Postgres client for dslr import and export
 # Install gettext for i18n
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
   --mount=type=cache,target=/var/lib/apt,sharing=locked \
-  sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bookworm-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
-  && curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null \
+  apt-get update \
+  && apt-get -y install gnupg \
+  && sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bookworm-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
+  && cat /tmp/postgresql-pgp-public-key.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null \
   && apt-get update \
   && apt-get -y install postgresql-client-16 gettext
 
