@@ -74,21 +74,8 @@ jobs:
       - name: Run tests
         run: poetry run python3 manage.py test --settings=django_template.settings.test -v=2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
       - name: Build dev Docker image
-        uses: docker/build-push-action@v6
-        with:
-          tags: django-template:dev-${{ github.sha }}
-          target: dev
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+        run: docker build -t django-template:dev --target dev .
 
       - name: Build production Docker image
-        uses: docker/build-push-action@v6
-        with:
-          tags: django-template:production-${{ github.sha }}
-          target: production
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+        run: docker build -t django-template:production --target production .
