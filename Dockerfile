@@ -3,7 +3,7 @@
 ####################
 
 # Make sure Python version is in sync with CI configs
-FROM python:3.12-slim-bookworm AS base
+FROM python:3.14-slim-bookworm AS base
 
 # Configure apt to keep downloaded packages for BuildKit caching
 # https://docs.docker.com/reference/dockerfile/#example-cache-apt-packages
