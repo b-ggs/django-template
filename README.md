@@ -2,8 +2,8 @@
 
 A template project with:
 
-- Python 3.12
-- Django 4.2 LTS
+- Python 3.14
+- Django 5.2 LTS
 - Postgres 16
 
 ## Features
