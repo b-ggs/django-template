@@ -33,6 +33,9 @@ sh:
 	@echo ""
 	docker compose exec web bash
 
+sh-run:
+	docker compose run --rm --no-deps web bash
+
 test:
 	docker compose exec web python3 manage.py test --settings=django_template.settings.test -v=2
 
