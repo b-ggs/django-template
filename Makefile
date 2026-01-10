@@ -44,6 +44,8 @@ test-keepdb:
 
 bump-deps:
 	docker compose run --rm --no-deps web sh -c 'poetry self add poetry-plugin-up && poetry up'
+	docker compose run --rm --no-deps web npx --yes npm-check-updates -u --target semver
+	docker compose run --rm --no-deps web npm install
 	docker compose run --rm --no-deps web pre-commit autoupdate
 
 rename:

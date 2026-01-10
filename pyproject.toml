@@ -7,29 +7,29 @@ package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.14"
-Django = "^5.2.9"
+Django = "^5.2.10"
 django-extensions = "^3.2.3"
 gunicorn = "^23.0.0"
 dj-database-url = "^2.3.0"
 whitenoise = "^6.11.0"
-ipython = "^8.37.0"
+ipython = "^8.38.0"
 psycopg = "^3.3.2"
-sentry-sdk = "^2.47.0"
+sentry-sdk = "^2.49.0"
 factory-boy = "^3.3.3"
 
 [tool.poetry.group.dev.dependencies]
-werkzeug = "^3.1.4"
+werkzeug = "^3.1.5"
 watchdog = "^6.0.0"
 django-browser-reload = "^1.21.0"
 django-silk = "^5.4.3"
 ruff = "*"
-pre-commit = "^4.5.0"
+pre-commit = "^4.5.1"
 bandit = "^1.9.2"
 detect-secrets = "^1.5.0"
 djlint = "^1.36.4"
 dslr = "*"
 django-types = "*"
-pyright = "^1.1.407"
+pyright = "^1.1.408"
 
 [build-system]
 requires = ["poetry-core"]

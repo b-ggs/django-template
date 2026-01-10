@@ -1,3 +1,18 @@
+##############################
+# Poetry install build stage #
+##############################
+
+# Make sure Python version is in sync with CI configs
+FROM python:3.14-slim-trixie AS poetry-install
+
+# Install Poetry
+# Make sure Poetry version is in sync with CI configs
+ENV POETRY_VERSION=2.2.1
+ENV POETRY_HOME=/opt/poetry
+ENV PATH=/opt/poetry/bin:$PATH
+ADD https://install.python-poetry.org /tmp/poetry-install.py
+RUN python3 /tmp/poetry-install.py
+
 ####################
 # Base build stage #
 ####################
@@ -17,6 +32,10 @@ RUN useradd --create-home django_template
 ENV APP_DIR=/app
 RUN mkdir -p "$APP_DIR" \
   && chown -R django_template:django_template "$APP_DIR"
+
+# Set up node_modules so it's owned and writable by the unprivileged user
+RUN mkdir -p "$APP_DIR/node_modules" \
+  && chown -R django_template:django_template "$APP_DIR/node_modules"
 
 # Set up virtualenv
 ENV VIRTUAL_ENV=/venv
@@ -56,7 +75,57 @@ RUN --mount=type=cache,target=/home/django_template/.cache/pypoetry,uid=1000 \
 EXPOSE 8000
 
 # Serve project with gunicorn
-CMD ["gunicorn", "django_template.wsgi:application"]
+CMD ["docker-start", "gunicorn"]
+
+##############################
+# Pre-production build stage #
+##############################
+
+FROM base AS pre-production
+
+# Switch to root to install packages from apt
+USER root
+
+# Download NodeSource apt setup script
+ADD https://deb.nodesource.com/setup_24.x /tmp/nodesource-setup.sh
+
+# Install Node.js for Node dependencies
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+  --mount=type=cache,target=/var/lib/apt,sharing=locked \
+  bash /tmp/nodesource-setup.sh \
+  # The NodeSource setup script already runs apt-get update
+  && apt-get install -y nodejs
+
+# Switch back to unprivileged user
+USER django_template
+
+# Copy Poetry from poetry-install
+ENV POETRY_HOME=/opt/poetry
+ENV PATH=/opt/poetry/bin:$PATH
+COPY --from=poetry-install --chown=django_template:django_template /opt/poetry /opt/poetry
+
+# Install main project dependencies
+RUN --mount=type=bind,source=pyproject.toml,target=/app/pyproject.toml \
+  --mount=type=bind,source=poetry.lock,target=/app/poetry.lock \
+  --mount=type=cache,target=/home/django_template/.cache/pypoetry,uid=1000 \
+  --mount=type=cache,target=/home/django_template/.cache/pip,uid=1000 \
+  poetry install --only main
+
+# Install Node dependencies
+RUN --mount=type=bind,source=package.json,target=/app/package.json \
+  --mount=type=bind,source=package-lock.json,target=/app/package-lock.json \
+  --mount=type=cache,target=/home/django_template/.npm,uid=1000 \
+  npm ci
+
+# Copy the project files
+# Ensure that this is one of the last commands for better layer caching
+COPY --chown=django_template:django_template . .
+
+# Build minified Tailwind styles
+RUN npm run tailwind:build
+
+# Collect staticfiles
+RUN SECRET_KEY=dummy python3 manage.py collectstatic --noinput --clear
 
 ##########################
 # Production build stage #
@@ -76,12 +145,20 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 # Switch back to unprivileged user
 USER django_template
 
+# Copy Poetry from poetry-install
+ENV POETRY_HOME=/opt/poetry
+ENV PATH=/opt/poetry/bin:$PATH
+COPY --from=poetry-install --chown=django_template:django_template /opt/poetry /opt/poetry
+
+# Copy virtualenv from pre-production
+COPY --from=pre-production --chown=django_template:django_template /venv /venv
+
+# Copy staticfiles from pre-production
+COPY --from=pre-production --chown=django_template:django_template /app/static_collected /app/static_collected
+
 # Copy the project files
 # Ensure that this is one of the last commands for better layer caching
 COPY --chown=django_template:django_template . .
-
-# Collect static files
-RUN SECRET_KEY=dummy python3 manage.py collectstatic --noinput --clear
 
 ###################
 # Dev build stage #
@@ -95,8 +172,12 @@ USER root
 # Download Postgres PGP public key
 ADD https://www.postgresql.org/media/keys/ACCC4CF8.asc /tmp/postgresql-pgp-public-key.asc
 
+# Download NodeSource apt setup script
+ADD https://deb.nodesource.com/setup_24.x /tmp/nodesource-setup.sh
+
 # Install gnupg for installing Postgres client
 # Install git for pre-commit
+# Install Node.js for Node dependencies
 # Install Postgres client for dslr import and export
 # Install gettext for i18n
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
@@ -105,14 +186,29 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
   && apt-get install -y gnupg \
   && sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt trixie-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
   && cat /tmp/postgresql-pgp-public-key.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null \
-  && apt-get update \
-  && apt-get install -y git postgresql-client-17 gettext
+  && bash /tmp/nodesource-setup.sh \
+  # The NodeSource setup script already runs apt-get update
+  && apt-get install -y git nodejs postgresql-client-17 gettext
 
 # Switch back to unprivileged user
 USER django_template
 
+# Copy Poetry from poetry-install
+ENV POETRY_HOME=/opt/poetry
+ENV PATH=/opt/poetry/bin:$PATH
+COPY --from=poetry-install --chown=django_template:django_template /opt/poetry /opt/poetry
+
+# Install Node dependencies
+RUN --mount=type=bind,source=package.json,target=/app/package.json \
+  --mount=type=bind,source=package-lock.json,target=/app/package-lock.json \
+  --mount=type=cache,target=/home/django_template/.npm,uid=1000 \
+  npm ci
+
 # Install all project dependencies
-RUN --mount=type=cache,target=/home/django_template/.cache/pypoetry,uid=1000 \
+RUN --mount=type=bind,source=pyproject.toml,target=/app/pyproject.toml \
+  --mount=type=bind,source=poetry.lock,target=/app/poetry.lock \
+  --mount=type=cache,target=/home/django_template/.cache/pypoetry,uid=1000 \
+  --mount=type=cache,target=/home/django_template/.cache/pip,uid=1000 \
   poetry install
 
 # Add bash aliases

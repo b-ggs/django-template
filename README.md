@@ -3,8 +3,10 @@
 A template project with:
 
 - Python 3.14
+- Node.js 24 LTS
 - Django 5.2 LTS
 - Postgres 17
+- Tailwind v4
 
 ## Features
 
