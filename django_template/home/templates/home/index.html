@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-    <h1>{% trans "Welcome to your new site!" %}</h1>
-    <p>You are running:</p>
-    <ul>
-        <li>Django {{ django_version }}</li>
-        <li>Python {{ python_version }}</li>
-    </ul>
+    <div class="space-y-2">
+        <h1 class="text-gray-800 font-bold text-3xl">{% translate "Welcome to your new site!" %}</h1>
+        <p class="text-base">{% translate "You are running:" %}</p>
+        <ul class="text-base list-disc list-inside ml-2">
+            <li>Django {{ django_version }}</li>
+            <li>Python {{ python_version }}</li>
+        </ul>
+    </div>
 {% endblock content %}

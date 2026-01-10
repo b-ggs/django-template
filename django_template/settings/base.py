@@ -160,16 +160,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATICFILES_DIRS = [
-    # Global static files can be stored in django_template/staticfiles and
-    # are accessible via the namespace `staticfiles/filename`, e.g.
-    # {% static 'staticfiles/styles.css' %}
-    ("staticfiles", os.path.join(BASE_DIR, "staticfiles_src")),
+    # Static files such as images and other assets can be stored in
+    # `django_template/static`
+    os.path.join(BASE_DIR, "django_template", "static"),
+    # Static files that are built by external tooling, e.g. Tailwind
+    # are stored in `django_template/static_built`
+    os.path.join(BASE_DIR, "django_template", "static_built"),
 ]
 
-# Collected static files will be stored in django_template/staticfiles_collected
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles_collected")
+# Collected static files will be stored in static_collected
+STATIC_ROOT = os.path.join(BASE_DIR, "static_collected")
 
 STATIC_URL = "/static/"
+
+# README.md files in static folders will be ignored
+STATICFILES_FINDERS_IGNORE = [
+    "README.md",
+]
+
 
 # Simplified static file serving
 # https://devcenter.heroku.com/articles/django-assets

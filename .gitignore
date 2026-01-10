@@ -1,6 +1,8 @@
 __pycache__
 .env
 **.dump
+
+django_template/static_built
 django_template/staticfiles_collected
 
 node_modules
