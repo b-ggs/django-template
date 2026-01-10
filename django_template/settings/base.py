@@ -75,7 +75,7 @@ WSGI_APPLICATION = "django_template.wsgi.application"
 
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 if "DATABASE_URL" in os.environ:
     DATABASES = {
@@ -88,7 +88,7 @@ if "DATABASE_URL" in os.environ:
 
 
 # Email
-# https://docs.djangoproject.com/en/4.2/topics/email/
+# https://docs.djangoproject.com/en/5.2/topics/email/
 
 EMAIL_HOST = os.getenv("EMAIL_HOST", "localhost")
 EMAIL_PORT = int(os.getenv("EMAIL_PORT", "25"))
@@ -100,10 +100,10 @@ DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "django_template@localhost"
 
 
 # Internationalization and localization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
-# https://docs.djangoproject.com/en/4.2/ref/settings/#std-setting-LANGUAGE_CODE
-# https://docs.djangoproject.com/en/4.2/ref/settings/#languages
-# https://docs.djangoproject.com/en/4.2/ref/settings/#locale-paths
+# https://docs.djangoproject.com/en/5.2/topics/i18n/
+# https://docs.djangoproject.com/en/5.2/ref/settings/#std-setting-LANGUAGE_CODE
+# https://docs.djangoproject.com/en/5.2/ref/settings/#languages
+# https://docs.djangoproject.com/en/5.2/ref/settings/#locale-paths
 
 LANGUAGE_CODE = "en"
 
@@ -116,13 +116,13 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, "locale")]
 
 
 # Use a custom User model
-# https://docs.djangoproject.com/en/4.2/topics/auth/customizing/#substituting-a-custom-user-model
+# https://docs.djangoproject.com/en/5.2/topics/auth/customizing/#substituting-a-custom-user-model
 
 AUTH_USER_MODEL = "users.User"
 
 
 # Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
+# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -143,7 +143,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
+# https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
 
@@ -157,7 +157,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATICFILES_DIRS = [
     # Static files such as images and other assets can be stored in
@@ -190,12 +190,12 @@ STORAGES = {
 }
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Logging
-# https://docs.djangoproject.com/en/4.2/topics/logging/#configuring-logging
+# https://docs.djangoproject.com/en/5.2/topics/logging/#configuring-logging
 
 # Log everything from INFO above to stdout
 LOGGING = {
