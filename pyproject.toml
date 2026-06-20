@@ -7,28 +7,34 @@ package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.14"
-Django = "^5.2.10"
-django-extensions = "^3.2.3"
-gunicorn = "^23.0.0"
-dj-database-url = "^2.3.0"
-whitenoise = "^6.11.0"
-ipython = "^8.38.0"
-psycopg = "^3.3.2"
-sentry-sdk = "^2.49.0"
+Django = "^5.2.14"
+django-extensions = "^4.1"
+gunicorn = "^26.0.0"
+dj-database-url = "^3.1.2"
+whitenoise = "^6.12.0"
+ipython = "^9.14.0"
+psycopg = "^3.3.4"
+sentry-sdk = "^2.61.1"
 factory-boy = "^3.3.3"
+djangorestframework = "^3.17.1"
+djangorestframework-simplejwt = "^5.5.1"
+drf-spectacular = "^0.29.0"
+drf-standardized-errors = { extras = ["openapi"], version = "^0.16.0" }
+celery = { extras = ["redis"], version = "^5.6.3" }
+django-silk = "^5.5.0"
 
 [tool.poetry.group.dev.dependencies]
-werkzeug = "^3.1.5"
+werkzeug = "^3.1.8"
 watchdog = "^6.0.0"
 django-browser-reload = "^1.21.0"
-django-silk = "^5.4.3"
 ruff = "*"
-pre-commit = "^4.5.1"
-bandit = "^1.9.2"
+pre-commit = "^4.6.0"
+bandit = "^1.9.4"
 detect-secrets = "^1.5.0"
 djlint = "^1.36.4"
 dslr = "*"
 django-types = "*"
+djangorestframework-types = "*"
 pyright = "^1.1.408"
 
 [build-system]

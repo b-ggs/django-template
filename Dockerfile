@@ -7,7 +7,7 @@ FROM python:3.14-slim-trixie AS poetry-install
 
 # Install Poetry
 # Make sure Poetry version is in sync with CI configs
-ENV POETRY_VERSION=2.2.1
+ENV POETRY_VERSION=2.3.2
 ENV POETRY_HOME=/opt/poetry
 ENV PATH=/opt/poetry/bin:$PATH
 ADD https://install.python-poetry.org /tmp/poetry-install.py
@@ -39,18 +39,10 @@ RUN mkdir -p "$APP_DIR/node_modules" \
 
 # Set up virtualenv
 ENV VIRTUAL_ENV=/venv
-ENV PATH=$VIRTUAL_ENV/bin:$PATH
-RUN mkdir -p "$VIRTUAL_ENV" \
-  && chown -R django_template:django_template "$VIRTUAL_ENV"
-
-# Install Poetry
-# Make sure Poetry version is in sync with CI configs
-ENV POETRY_VERSION=2.2.1
-ENV POETRY_HOME=/opt/poetry
-ENV PATH=$POETRY_HOME/bin:$PATH
-ADD https://install.python-poetry.org /tmp/poetry-install.py
-RUN python3 /tmp/poetry-install.py \
-  && chown -R django_template:django_template "$POETRY_HOME"
+ENV PATH=/venv/bin:$PATH
+RUN mkdir -p /venv \
+  && python3 -m venv /venv \
+  && chown -R django_template:django_template /venv
 
 # Switch to unprivileged user
 USER django_template
@@ -65,14 +57,12 @@ WORKDIR $APP_DIR
 ENV PYTHONUNBUFFERED=1
 ENV PORT=8000
 
-# Install main project dependencies
-COPY --chown=django_template:django_template pyproject.toml poetry.lock ./
-RUN --mount=type=cache,target=/home/django_template/.cache/pypoetry,uid=1000 \
-  python3 -m venv $VIRTUAL_ENV \
-  && poetry install --only main
-
 # Port used by this container to serve HTTP
 EXPOSE 8000
+
+# Set up entrypoint
+COPY --chown=django_template:django_template entrypoint.sh ./
+ENTRYPOINT ["./entrypoint.sh"]
 
 # Serve project with gunicorn
 CMD ["docker-start", "gunicorn"]
@@ -132,6 +122,11 @@ RUN SECRET_KEY=dummy python3 manage.py collectstatic --noinput --clear
 ##########################
 
 FROM base AS production
+
+# In CI, ensure that the GIT_REVISION build arg is set to the current git
+# revision
+ARG GIT_REVISION
+ENV GIT_REVISION=$GIT_REVISION
 
 # Temporarily switch to install packages from apt
 USER root
@@ -210,12 +205,6 @@ RUN --mount=type=bind,source=pyproject.toml,target=/app/pyproject.toml \
   --mount=type=cache,target=/home/django_template/.cache/pypoetry,uid=1000 \
   --mount=type=cache,target=/home/django_template/.cache/pip,uid=1000 \
   poetry install
-
-# Add bash aliases
-RUN echo "alias dj='python3 manage.py'" >> $HOME/.bash_aliases
-RUN echo "alias djrun='python3 manage.py runserver_plus 0:8000'" >> $HOME/.bash_aliases
-RUN echo "alias djtest='python3 manage.py test --settings=django_template.settings.test -v=2'" >> $HOME/.bash_aliases
-RUN echo "alias djtestkeepdb='python3 manage.py test --settings=django_template.settings.test -v=2 --keepdb'" >> $HOME/.bash_aliases
 
 # Copy the project files
 # Ensure that this is one of the last commands for better layer caching

@@ -1,7 +1,9 @@
 import os
+from datetime import timedelta
 from pathlib import Path
 
 import dj_database_url
+from celery.schedules import crontab
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,11 +26,10 @@ if csrf_trusted_origins := os.getenv("CSRF_TRUSTED_ORIGINS"):
 
 INSTALLED_APPS = [
     # Project apps
+    "django_template.auth",
     "django_template.home",
     "django_template.utils",
     "django_template.users",
-    # Third-party apps
-    "django_extensions",
     # Django core apps
     "django.contrib.admin",
     "django.contrib.auth",
@@ -36,6 +37,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Third-party apps
+    "django_extensions",
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
+    "drf_spectacular",
+    "drf_standardized_errors",
 ]
 
 MIDDLEWARE = [
@@ -84,6 +92,24 @@ if "DATABASE_URL" in os.environ:
             conn_max_age=600,
             conn_health_checks=True,
         ),
+    }
+
+
+# Cache
+# https://docs.djangoproject.com/en/5.2/topics/cache/
+# https://docs.djangoproject.com/en/5.2/topics/cache/#redis
+
+if redis_url := os.getenv("REDIS_URL"):
+    # Heroku Key-Value Store uses self-signed certificates
+    # https://devcenter.heroku.com/articles/connecting-heroku-redis#connecting-in-python
+    if os.getenv("REDIS_URL_SSL_CERT_REQS_NONE"):
+        redis_url += "?ssl_cert_reqs=none"
+
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": redis_url,
+        }
     }
 
 
@@ -219,6 +245,131 @@ LOGGING = {
         "level": "INFO",
     },
 }
+
+
+# Django REST framework
+# https://www.django-rest-framework.org/
+
+REST_FRAMEWORK = {
+    "EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_PARSER_CLASSES": [
+        "rest_framework.parsers.JSONParser",
+    ],
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "60/min",
+    },
+    "DEFAULT_SCHEMA_CLASS": "drf_standardized_errors.openapi.AutoSchema",
+}
+
+
+# Django REST framework Simple JWT
+# https://django-rest-framework-simplejwt.readthedocs.io/en/stable/
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+}
+
+
+# drf-spectacular
+# https://drf-spectacular.readthedocs.io/en/latest/
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "django_template",
+    "DESCRIPTION": "API documentation for the django_template project",
+    "VERSION": "0.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SERVE_AUTHENTICATION": [
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+    "SERVE_PERMISSIONS": [
+        "rest_framework.permissions.IsAdminUser",
+    ],
+    "SORT_OPERATIONS": False,
+    "ENUM_NAME_OVERRIDES": {
+        "ValidationErrorEnum": (
+            "drf_standardized_errors.openapi_serializers.ValidationErrorEnum.choices"
+        ),
+        "ClientErrorEnum": (
+            "drf_standardized_errors.openapi_serializers.ClientErrorEnum.choices"
+        ),
+        "ServerErrorEnum": (
+            "drf_standardized_errors.openapi_serializers.ServerErrorEnum.choices"
+        ),
+        "ErrorCode401Enum": (
+            "drf_standardized_errors.openapi_serializers.ErrorCode401Enum.choices"
+        ),
+        "ErrorCode403Enum": (
+            "drf_standardized_errors.openapi_serializers.ErrorCode403Enum.choices"
+        ),
+        "ErrorCode404Enum": (
+            "drf_standardized_errors.openapi_serializers.ErrorCode404Enum.choices"
+        ),
+        "ErrorCode405Enum": (
+            "drf_standardized_errors.openapi_serializers.ErrorCode405Enum.choices"
+        ),
+        "ErrorCode406Enum": (
+            "drf_standardized_errors.openapi_serializers.ErrorCode406Enum.choices"
+        ),
+        "ErrorCode415Enum": (
+            "drf_standardized_errors.openapi_serializers.ErrorCode415Enum.choices"
+        ),
+        "ErrorCode429Enum": (
+            "drf_standardized_errors.openapi_serializers.ErrorCode429Enum.choices"
+        ),
+        "ErrorCode500Enum": (
+            "drf_standardized_errors.openapi_serializers.ErrorCode500Enum.choices"
+        ),
+    },
+    "POSTPROCESSING_HOOKS": [
+        "drf_standardized_errors.openapi_hooks.postprocess_schema_enums",
+    ],
+}
+
+
+# drf-standardized-errors
+# https://drf-standardized-errors.readthedocs.io/en/stable/
+
+DRF_STANDARDIZED_ERRORS = {
+    "ALLOWED_ERROR_STATUS_CODES": ["400", "401", "403", "404", "429", "500"],
+}
+
+
+# Celery and Celery Beat
+# https://docs.celeryq.dev/en/stable/index.html
+# https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html
+
+if redis_url := os.getenv("REDIS_URL"):
+    # Heroku Key-Value Store uses self-signed certificates
+    # https://devcenter.heroku.com/articles/connecting-heroku-redis#connecting-in-python
+    if os.getenv("REDIS_URL_SSL_CERT_REQS_NONE"):
+        redis_url += "?ssl_cert_reqs=none"
+
+    CELERY_BROKER_URL = redis_url
+
+CELERY_BEAT_SCHEDULE = {
+    "hello_world_every_10_minutes": {
+        "task": "django_template.home.tasks.hello_world",
+        "schedule": 60 * 10,
+    },
+    "hello_world_every_00": {
+        "task": "django_template.home.tasks.hello_world",
+        "schedule": crontab(minute="0", hour="*"),
+    },
+}
+
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 
 # django-extensions

@@ -12,14 +12,10 @@ max_requests = 1000
 
 # Number of workers
 # https://docs.gunicorn.org/en/stable/settings.html#workers
+#
+# If GUNICORN_WORKER_COUNT is unset, this falls back to Gunicorn's default
+# worker count.
+# See the docs for how Gunicorn determines the default worker count.
 
-
-def get_max_workers() -> int:
-    # Gunicorn recommends (number of cores * 2~4)
-    if count := os.cpu_count():
-        return (count * 2) + 1
-    return 3
-
-
-# Check if WEB_CONCURRENCY is available, else use recommended based on CPU count
-workers = int(os.getenv("WEB_CONCURRENCY", get_max_workers()))
+if worker_count := os.getenv("GUNICORN_WORKER_COUNT"):
+    workers = int(worker_count)
