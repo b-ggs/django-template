@@ -40,33 +40,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Set up Python
-        id: setup-python
-        uses: actions/setup-python@v6
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
           python-version: "3.14"
+          enable-cache: true
 
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-        with:
-          version: "2.4.1"
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-
-      - name: Load cached venv
-        uses: actions/cache@v5
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
-
-      - name: Install dependencies with Poetry
-        run: poetry install --no-interaction
+      - name: Install dependencies
+        run: uv sync
 
       - name: Cache pre-commit environments
         uses: actions/cache@v5
         with:
           path: ~/.cache/pre-commit
-          key: pre-commit-3|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
+          key: pre-commit-3|${{ hashFiles('.python-version') }}|${{ hashFiles('.pre-commit-config.yaml') }}
 
       # pyright-python can be a little flaky when it's instructed to check
       # files directly after it's first installed on GitHub Actions runners.
@@ -82,20 +69,20 @@ jobs:
       # https://github.com/RobertCraigie/pyright-python/issues/213
       # https://github.com/RobertCraigie/pyright-python/issues/231
       - name: Initialize pyright
-        run: poetry run pyright --version
+        run: uv run pyright --version
 
       - name: Run pre-commit hooks
-        run: poetry run pre-commit run --show-diff-on-failure --color=always --all-files
+        run: uv run pre-commit run --show-diff-on-failure --color=always --all-files
 
       - name: Check for missing migrations
-        run: poetry run python3 manage.py makemigrations --check --noinput
+        run: uv run python3 manage.py makemigrations --check --noinput
         if: always()
 
       - name: Collect staticfiles
-        run: poetry run python3 manage.py collectstatic --noinput
+        run: uv run python3 manage.py collectstatic --noinput
 
       - name: Run tests
-        run: poetry run python3 manage.py test --settings=django_template.settings.test -v=2
+        run: uv run python3 manage.py test --settings=django_template.settings.test -v=2
 
       - name: Build dev Docker image
         run: docker build -t django-template:dev --target dev .

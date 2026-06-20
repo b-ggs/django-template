@@ -1,24 +1,9 @@
-##############################
-# Poetry install build stage #
-##############################
-
-# Make sure Python version is in sync with CI configs
-FROM python:3.14-slim-trixie AS poetry-install
-
-# Install Poetry
-# Make sure Poetry version is in sync with CI configs
-ENV POETRY_VERSION=2.3.2
-ENV POETRY_HOME=/opt/poetry
-ENV PATH=/opt/poetry/bin:$PATH
-ADD https://install.python-poetry.org /tmp/poetry-install.py
-RUN python3 /tmp/poetry-install.py
-
 ####################
 # Base build stage #
 ####################
 
 # Make sure Python version is in sync with CI configs
-FROM python:3.14-slim-trixie AS base
+FROM ghcr.io/astral-sh/uv:python3.14-trixie-slim AS base
 
 # Configure apt to keep downloaded packages for BuildKit caching
 # https://docs.docker.com/reference/dockerfile/#example-cache-apt-packages
@@ -39,9 +24,9 @@ RUN mkdir -p "$APP_DIR/node_modules" \
 
 # Set up virtualenv
 ENV VIRTUAL_ENV=/venv
+ENV UV_PROJECT_ENVIRONMENT=/venv
 ENV PATH=/venv/bin:$PATH
 RUN mkdir -p /venv \
-  && python3 -m venv /venv \
   && chown -R django_template:django_template /venv
 
 # Switch to unprivileged user
@@ -89,17 +74,11 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 # Switch back to unprivileged user
 USER django_template
 
-# Copy Poetry from poetry-install
-ENV POETRY_HOME=/opt/poetry
-ENV PATH=/opt/poetry/bin:$PATH
-COPY --from=poetry-install --chown=django_template:django_template /opt/poetry /opt/poetry
-
 # Install main project dependencies
 RUN --mount=type=bind,source=pyproject.toml,target=/app/pyproject.toml \
-  --mount=type=bind,source=poetry.lock,target=/app/poetry.lock \
-  --mount=type=cache,target=/home/django_template/.cache/pypoetry,uid=1000 \
-  --mount=type=cache,target=/home/django_template/.cache/pip,uid=1000 \
-  poetry install --only main
+  --mount=type=bind,source=uv.lock,target=/app/uv.lock \
+  --mount=type=cache,target=/home/django_template/.cache/uv,uid=1000 \
+  uv sync --no-dev --frozen
 
 # Install Node dependencies
 RUN --mount=type=bind,source=package.json,target=/app/package.json \
@@ -139,11 +118,6 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 
 # Switch back to unprivileged user
 USER django_template
-
-# Copy Poetry from poetry-install
-ENV POETRY_HOME=/opt/poetry
-ENV PATH=/opt/poetry/bin:$PATH
-COPY --from=poetry-install --chown=django_template:django_template /opt/poetry /opt/poetry
 
 # Copy virtualenv from pre-production
 COPY --from=pre-production --chown=django_template:django_template /venv /venv
@@ -188,11 +162,6 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 # Switch back to unprivileged user
 USER django_template
 
-# Copy Poetry from poetry-install
-ENV POETRY_HOME=/opt/poetry
-ENV PATH=/opt/poetry/bin:$PATH
-COPY --from=poetry-install --chown=django_template:django_template /opt/poetry /opt/poetry
-
 # Install Node dependencies
 RUN --mount=type=bind,source=package.json,target=/app/package.json \
   --mount=type=bind,source=package-lock.json,target=/app/package-lock.json \
@@ -201,10 +170,9 @@ RUN --mount=type=bind,source=package.json,target=/app/package.json \
 
 # Install all project dependencies
 RUN --mount=type=bind,source=pyproject.toml,target=/app/pyproject.toml \
-  --mount=type=bind,source=poetry.lock,target=/app/poetry.lock \
-  --mount=type=cache,target=/home/django_template/.cache/pypoetry,uid=1000 \
-  --mount=type=cache,target=/home/django_template/.cache/pip,uid=1000 \
-  poetry install
+  --mount=type=bind,source=uv.lock,target=/app/uv.lock \
+  --mount=type=cache,target=/home/django_template/.cache/uv,uid=1000 \
+  uv sync --frozen
 
 # Copy the project files
 # Ensure that this is one of the last commands for better layer caching

@@ -6,9 +6,9 @@
     "tailwind:watch": "npx @tailwindcss/cli -i django_template/static_src/tailwind/styles.css -o django_template/static_built/tailwind/styles.css --watch"
   },
   "devDependencies": {
-    "@tailwindcss/cli": "^4.1.18",
+    "@tailwindcss/cli": "^4.3.1",
     "@tailwindcss/forms": "^0.5.11",
-    "@tailwindcss/typography": "^0.5.19",
-    "tailwindcss": "^4.1.18"
+    "@tailwindcss/typography": "^0.5.20",
+    "tailwindcss": "^4.3.1"
   }
 }
