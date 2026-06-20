@@ -7,7 +7,7 @@ from celery.schedules import crontab
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 DJANGO_ENV = os.getenv("DJANGO_ENV", "production")
 
@@ -66,7 +66,7 @@ ROOT_URLCONF = "django_template.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "DIRS": [os.path.join(BASE_DIR, "django_template", "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -138,7 +138,7 @@ LANGUAGES = [
     ("tl", _("Tagalog")),
 ]
 
-LOCALE_PATHS = [os.path.join(BASE_DIR, "locale")]
+LOCALE_PATHS = [os.path.join(BASE_DIR, "django_template", "locale")]
 
 
 # Use a custom User model
