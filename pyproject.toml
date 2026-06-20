@@ -27,16 +27,15 @@ dev = [
   "werkzeug>=3.1.8,<4",
   "watchdog>=6.0.0,<7",
   "django-browser-reload>=1.21.0,<2",
-  "ruff",
+  "ruff>=0.15.18,<1",
   "pre-commit>=4.6.0,<5",
-  "bandit>=1.9.4,<2",
   "detect-secrets>=1.5.0,<2",
   "djlint>=1.39.2,<2",
-  "dslr",
-  "django-types",
-  "djangorestframework-types",
+  "dslr>=0.6.0,<1",
+  "django-types>=0.24.0,<1",
+  "djangorestframework-types>=0.9.0,<1",
   "pyright>=1.1.410,<2",
-  "uv-bump",
+  "uv-bump>=0.5.0,<1",
 ]
 
 [tool.ruff.lint]
@@ -48,6 +47,7 @@ select = [
   "SIM", # https://docs.astral.sh/ruff/rules/#flake8-simplify-sim
   "DJ",  # https://docs.astral.sh/ruff/rules/#flake8-django-dj
   "T10", # https://docs.astral.sh/ruff/rules/#flake8-debugger-t10
+  "S",   # https://docs.astral.sh/ruff/rules/#flake8-bandit-s
 ]
 ignore = [
   "SIM108", # don't recommend ternary operator
@@ -56,9 +56,6 @@ exclude = ["django_template/*/migrations/*.py"]
 
 [tool.ruff.format]
 exclude = ["django_template/*/migrations/*.py"]
-
-[tool.bandit]
-exclude_dirs = ["tests"]
 
 [tool.djlint]
 # https://www.djlint.com/docs/linter/#rules
