@@ -4,6 +4,10 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    ignore:
+      - dependency-name: django
+        versions:
+          - ">= 5.3"
   - package-ecosystem: github-actions
     directory: /
     schedule:
