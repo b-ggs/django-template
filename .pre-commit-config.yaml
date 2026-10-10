@@ -30,10 +30,13 @@ repos:
       - id: djlint-reformat-django
       - id: djlint-django
 
-  - repo: https://github.com/ComPWA/taplo-pre-commit
-    rev: v0.9.3
+  - repo: https://github.com/tombi-toml/tombi-pre-commit
+    rev: v1.8.0
     hooks:
-      - id: taplo-format
+      - id: tombi-format
+        args:
+          - --offline
+        exclude: ^uv\.lock$
 
   - repo: local
     hooks:
