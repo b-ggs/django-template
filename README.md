@@ -22,6 +22,8 @@ A template project with:
 [sentry]: https://sentry.io/
 [glitchtip]: https://glitchtip.com/
 
+<!-- BEGIN: remove-after-make-rename -->
+
 ## Making it your own
 
 Click on the **"Use this template"** button on GitHub and create a new repository.
@@ -35,6 +37,8 @@ Run the `rename` Makefile target to replace all instances of `django_template` a
 ```bash
 make rename PROJECT_NAME=my_project_name_with_underscores
 ```
+
+<!-- END: remove-after-make-rename -->
 
 ## Running the project locally
 

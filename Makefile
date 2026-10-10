@@ -48,6 +48,7 @@ bump-deps:
 	docker compose run --rm --no-deps web npm install
 	docker compose run --rm --no-deps web pre-commit autoupdate
 
+# BEGIN: remove-after-make-rename
 rename:
 	@# Check if PROJECT_NAME is defined
 	@if [ -z "$$PROJECT_NAME" ]; then \
@@ -81,9 +82,14 @@ rename:
 	@# Replace all instances of django-template with PROJECT_NAME_KEBAB
 	grep -rl django-template . | xargs perl -i -pe "s/django-template/$(PROJECT_NAME_KEBAB)/g"
 
+	@# Remove template-only setup instructions and this target
+	perl -0pi -e 's/^<!-- BEGIN: remove-after-make-rename -->\n.*?^<!-- END: remove-after-make-rename -->\n?//ms' README.md AGENTS.md
+	perl -0pi -e 's/^# BEGIN: remove-after-make-rename\n.*?^# END: remove-after-make-rename\n?//ms' Makefile
+
 	@# Reset git index
 	rm .git/index
 	git reset
 
 	@echo ""
 	@echo "Done!"
+# END: remove-after-make-rename
