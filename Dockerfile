@@ -174,6 +174,12 @@ RUN --mount=type=bind,source=pyproject.toml,target=/app/pyproject.toml \
   --mount=type=cache,target=/home/django_template/.cache/uv,uid=1000 \
   uv sync --frozen
 
+# Add shortcuts for interactive development shells
+RUN echo "alias dj='python3 manage.py'" >> "$HOME/.bash_aliases" \
+  && echo "alias djrun='python3 manage.py runserver_plus 0:8000 --nopin --nostatic'" >> "$HOME/.bash_aliases" \
+  && echo "alias djtest='python3 manage.py test --settings=django_template.settings.test -v=2'" >> "$HOME/.bash_aliases" \
+  && echo "alias djtestkeepdb='python3 manage.py test --settings=django_template.settings.test -v=2 --keepdb'" >> "$HOME/.bash_aliases"
+
 # Copy the project files
 # Ensure that this is one of the last commands for better layer caching
 COPY --chown=django_template:django_template . .
