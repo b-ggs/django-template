@@ -3,7 +3,7 @@
 ## Environment
 
 - Development is Docker-first. Before the first `make build`, create the required untracked env file with `cp .env.example .env`; Compose fails when `.env` is absent.
-- `make build`, `make start`, `make stop`, and `make sh` manage the full stack. The `web` service mounts the repository at `/app`; Postgres, Redis, Celery, Celery Beat, Tailwind watch, and MailDev are separate services.
+- `make build`, `make start`, `make stop`, and `make sh` manage the stack. `web` is the only application container and stays idle until commands are run through a shell; Postgres, Redis, and MailDev are separate infrastructure services.
 - Python dependencies are locked with `uv.lock` (Python 3.14); Node dependencies are locked with `package-lock.json` (Node 24). Do not hand-edit lockfiles.
 - `manage.py` defaults to production-like `django_template.settings.base`. Local Compose gets `django_template.settings.dev` from `.env`; tests must explicitly use `django_template.settings.test`.
 

@@ -6,12 +6,12 @@ build:
 	@echo "You can now start your containers with \`make start\`"
 
 start:
-	docker compose up -d
+	docker compose up -d --remove-orphans
 	@echo ""
 	@echo "You can now enter your Django container with \`make sh\`"
 
 stop:
-	docker compose down
+	docker compose down --remove-orphans
 
 restart: stop start
 
@@ -30,11 +30,12 @@ sh:
 	@echo "  - \`dj\` - \`python3 manage.py\`"
 	@echo "  - \`djtest\` - \`python3 manage.py test --settings=django_template.settings.test -v=2\`"
 	@echo "  - \`djtestkeepdb\` - \`python3 manage.py test --settings=django_template.settings.test -v=2 --keepdb\`"
+	@echo "  - \`celeryworker\` - start the Celery worker"
+	@echo "  - \`celerybeat\` - start Celery Beat"
+	@echo "  - \`tailwindbuild\` - build Tailwind CSS"
+	@echo "  - \`tailwindwatch\` - watch and rebuild Tailwind CSS"
 	@echo ""
 	docker compose exec web bash
-
-sh-run:
-	docker compose run --rm --no-deps web bash
 
 test:
 	docker compose exec web python3 manage.py test --settings=django_template.settings.test -v=2
@@ -43,10 +44,10 @@ test-keepdb:
 	docker compose exec web python3 manage.py test --settings=django_template.settings.test -v=2 --keepdb
 
 bump-deps:
-	docker compose run --rm --no-deps web uv-bump -v
-	docker compose run --rm --no-deps web npx --yes npm-check-updates -u --target semver
-	docker compose run --rm --no-deps web npm install
-	docker compose run --rm --no-deps web pre-commit autoupdate
+	docker compose exec web uv-bump -v
+	docker compose exec web npx --yes npm-check-updates -u --target semver
+	docker compose exec web npm install
+	docker compose exec web pre-commit autoupdate
 
 # BEGIN: remove-after-make-rename
 rename:

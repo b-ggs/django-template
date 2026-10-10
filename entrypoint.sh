@@ -11,29 +11,8 @@ if [[ $1 == "docker-start" ]]; then
     exec gunicorn django_template.wsgi:application
   elif [[ $1 == "celery" ]]; then
     exec celery -A django_template worker --loglevel=info
-  elif [[ $1 == "watchmedo-celery" ]]; then
-    exec \
-      watchmedo \
-      auto-restart \
-      --directory=django_template \
-      --pattern=*.py \
-      --recursive \
-      -- \
-      celery -A django_template worker --loglevel=info
   elif [[ $1 == "celery-beat" ]]; then
     exec celery -A django_template beat --loglevel=info
-  elif [[ $1 == "watchmedo-celery-beat" ]]; then
-    exec \
-      watchmedo \
-      auto-restart \
-      --directory=django_template \
-      --pattern=*.py \
-      --recursive \
-      -- \
-      celery -A django_template beat --loglevel=info
-  elif [[ $1 == "tailwind-watch" ]]; then
-    npm ci
-    exec npm run tailwind:watch
   fi
 fi
 

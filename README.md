@@ -72,6 +72,12 @@ Several bash aliases exist in the Django Docker container such as:
 - `djrun`: `python3 manage.py runserver_plus 0:8000 --nopin --nostatic`
 - `djtest`: `python3 manage.py test --settings=django_template.settings.test -v=2`
 - `djtestkeepdb`: `python3 manage.py test --settings=django_template.settings.test -v=2 --keepdb`
+- `celeryworker`: `celery -A django_template worker --loglevel=info`
+- `celerybeat`: `celery -A django_template beat --loglevel=info`
+- `tailwindbuild`: `npm run tailwind:build`
+- `tailwindwatch`: `npm run tailwind:watch`
+
+Open additional shells with `make sh` to run the development server, Celery processes, and Tailwind watcher concurrently in the same Django container.
 
 Run all outstanding migrations.
 

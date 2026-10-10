@@ -178,7 +178,11 @@ RUN --mount=type=bind,source=pyproject.toml,target=/app/pyproject.toml \
 RUN echo "alias dj='python3 manage.py'" >> "$HOME/.bash_aliases" \
   && echo "alias djrun='python3 manage.py runserver_plus 0:8000 --nopin --nostatic'" >> "$HOME/.bash_aliases" \
   && echo "alias djtest='python3 manage.py test --settings=django_template.settings.test -v=2'" >> "$HOME/.bash_aliases" \
-  && echo "alias djtestkeepdb='python3 manage.py test --settings=django_template.settings.test -v=2 --keepdb'" >> "$HOME/.bash_aliases"
+  && echo "alias djtestkeepdb='python3 manage.py test --settings=django_template.settings.test -v=2 --keepdb'" >> "$HOME/.bash_aliases" \
+  && echo "alias celeryworker='celery -A django_template worker --loglevel=info'" >> "$HOME/.bash_aliases" \
+  && echo "alias celerybeat='celery -A django_template beat --loglevel=info'" >> "$HOME/.bash_aliases" \
+  && echo "alias tailwindbuild='npm run tailwind:build'" >> "$HOME/.bash_aliases" \
+  && echo "alias tailwindwatch='npm run tailwind:watch'" >> "$HOME/.bash_aliases"
 
 # Copy the project files
 # Ensure that this is one of the last commands for better layer caching

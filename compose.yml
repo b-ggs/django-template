@@ -1,7 +1,7 @@
 services:
-  web: &web
+  web:
     build: .
-    command: docker-start runserver-plus
+    command: sleep infinity
     ports:
       - "8000:8000"
     env_file: .env
@@ -16,26 +16,6 @@ services:
         condition: service_healthy
       redis:
         condition: service_started
-
-  celery:
-    <<: *web
-    command: docker-start watchmedo-celery
-    ports: []
-    stdin_open: false
-    tty: false
-
-  celery-beat:
-    <<: *web
-    command: docker-start watchmedo-celery-beat
-    ports: []
-    stdin_open: false
-    tty: false
-
-  tailwind-watch:
-    <<: *web
-    command: docker-start tailwind-watch
-    ports: []
-    stdin_open: false
 
   postgres:
     # Make sure Postgres version is in sync with CI configs and is available on Heroku
