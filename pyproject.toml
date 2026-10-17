@@ -18,7 +18,7 @@ dependencies = [
   "gunicorn>=26.2.0,<27",
   "ipython>=9.17.1,<10",
   "psycopg>=3.3.6,<4",
-  "sentry-sdk>=2.71.0,<3",
+  "sentry-sdk>=2.72.0,<3",
   "whitenoise>=6.12.0,<7",
 ]
 
@@ -28,11 +28,11 @@ dev = [
   "django-browser-reload>=1.21.0,<2",
   "django-types>=0.24.0,<1",
   "djangorestframework-types>=0.9.0,<1",
-  "djlint>=1.46.4,<2",
+  "djlint>=1.46.6,<2",
   "dslr>=0.6.0,<1",
-  "pre-commit>=4.6.2,<5",
+  "pre-commit>=4.7.0,<5",
   "pyright>=1.1.414,<2",
-  "ruff>=0.17.0,<1",
+  "ruff>=0.17.1,<1",
   "uv-bump>=0.6.0,<1",
   "watchdog>=6.0.0,<7",
   "werkzeug>=3.1.9,<4",
