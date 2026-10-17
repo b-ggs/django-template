@@ -44,10 +44,11 @@ test-keepdb:
 	docker compose exec web python3 manage.py test --settings=django_template.settings.test -v=2 --keepdb
 
 bump-deps:
-	docker compose exec web uv-bump -v
-	docker compose exec web npx --yes npm-check-updates -u --target semver
-	docker compose exec web npm install
-	docker compose exec web pre-commit autoupdate
+	docker compose run --rm --no-deps web bash -ceu '\
+		uv-bump -v; \
+		npx --yes npm-check-updates -u --target semver; \
+		npm install; \
+		pre-commit autoupdate'
 
 # BEGIN: remove-after-make-rename
 rename:
