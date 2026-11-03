@@ -34,7 +34,7 @@ dev = [
   "pyright>=1.1.414,<2",
   "ruff>=0.17.3,<1",
   "uv-bump>=0.6.0,<1",
-  "watchdog>=6.0.0,<7",
+  "watchdog>=7.0.0,<8",
   "werkzeug>=3.1.9,<4",
 ]
 
