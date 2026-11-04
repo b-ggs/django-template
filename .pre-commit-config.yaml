@@ -25,13 +25,13 @@ repos:
         exclude: package.lock.json
 
   - repo: https://github.com/djlint/djLint
-    rev: v1.47.1
+    rev: v1.49.9
     hooks:
       - id: djlint-reformat-django
       - id: djlint-django
 
   - repo: https://github.com/tombi-toml/tombi-pre-commit
-    rev: v1.9.7
+    rev: v1.10.0
     hooks:
       - id: tombi-format
         args:

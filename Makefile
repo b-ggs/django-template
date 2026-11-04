@@ -43,12 +43,17 @@ test:
 test-keepdb:
 	docker compose exec web python3 manage.py test --settings=django_template.settings.test -v=2 --keepdb
 
+# uv-bump raises pyproject's minimums after locking, so lock again to match.
+# New hook versions can reformat files: the first pre-commit pass applies those
+# fixes, and the second fails only if something still needs a hand fix.
 bump-deps:
 	docker compose run --rm --no-deps web bash -ceu '\
 		uv-bump -v; \
+		uv lock; \
 		npx --yes npm-check-updates -u --target semver; \
 		npm install; \
-		pre-commit autoupdate'
+		pre-commit autoupdate; \
+		pre-commit run --all-files || pre-commit run --all-files'
 
 # BEGIN: remove-after-make-rename
 rename:
